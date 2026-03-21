@@ -32,6 +32,16 @@
             z-index: 10;
         }
         .shell { position: relative; z-index: 1; width: 100%; max-width: 860px; }
+        .video-banner { display:flex; align-items:center; gap:14px; background:rgba(172,46,46,0.08); border:1px solid rgba(172,46,46,0.3); border-radius:10px; padding:14px 18px; margin-bottom:20px; transition:all 0.3s; }
+        .video-banner:hover { border-color:rgba(172,46,46,0.6); }
+        .video-icon { font-size:22px; flex-shrink:0; }
+        .video-text { flex:1; }
+        .video-text-title { font-size:13px; font-weight:600; color:#fff; letter-spacing:1px; margin-bottom:3px; }
+        .video-text-sub { font-family:'Share Tech Mono',monospace; font-size:10px; color:var(--text-mid); letter-spacing:1px; }
+        .video-link { display:inline-flex; align-items:center; gap:6px; background:var(--red); color:white; border:none; padding:8px 16px; border-radius:6px; font-family:'Oswald',sans-serif; font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; cursor:pointer; text-decoration:none; transition:all 0.2s; flex-shrink:0; }
+        .video-link:hover { background:var(--red-hot); }
+        .video-dismiss { background:transparent; border:1px solid var(--border); color:var(--text-dim); width:26px; height:26px; border-radius:4px; cursor:pointer; font-size:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all 0.2s; }
+        .video-dismiss:hover { border-color:var(--border-bright); color:var(--text-mid); }
 
         .header { text-align: center; margin-bottom: 36px; }
         .header-eyebrow { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--red); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 10px; opacity: 0.8; }
@@ -72,7 +82,9 @@
         .pill-right { color: var(--red); }
         .pill-div { color: var(--text-dim); margin: 0 6px; }
 
-        .overlays-header { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+        .overlays-header { display: flex; align-items: center; gap: 12px; margin-bottom: 0; cursor:pointer; user-select:none; }
+        .overlays-body { margin-top: 18px; }
+        .overlays-toggle { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--text-dim); letter-spacing: 1px; flex-shrink: 0; }
         .overlays-title { font-size: 15px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: #fff; }
         .overlays-line { flex: 1; height: 1px; background: var(--border); }
         .overlays-count { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--text-dim); }
@@ -283,6 +295,16 @@
         <div class="header-line"></div>
     </div>
 
+    <div class="video-banner" id="videoBanner">
+        <div class="video-icon">🎬</div>
+        <div class="video-text">
+            <div class="video-text-title">Watch the instructional video</div>
+            <div class="video-text-sub">OBS setup · API config · all overlays explained</div>
+        </div>
+        <a class="video-link" id="videoLink" href="#" target="_blank">▶ WATCH INSTRUCTIONAL VIDEO</a>
+        <button type="button" class="video-dismiss" onclick="dismissVideoBanner()" title="Hide this">✕</button>
+    </div>
+
     <div class="status-bar" id="statusBar">
         <div class="status-dot"></div>
         <div class="status-text" id="statusText">AWAITING LIVE API...</div>
@@ -321,6 +343,7 @@
         </div>
     </div>
 
+
     <div class="section">
         <div class="overlays-header">
             <div class="section-num" style="background:var(--red);width:28px;height:28px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:white;flex-shrink:0;">2</div>
@@ -331,14 +354,15 @@
         <div class="link-grid" id="output"></div>
     </div>
 
-    <!-- 2: TEAM SWAP -->
+    <!-- 3: TEAM SETUP (alignment + faction combined) -->
     <div class="section">
         <div class="section-header">
-            <div class="section-num">2</div>
-            <div class="section-title">Team Side Alignment</div>
-            <div class="section-hint" id="swapHint">Blue = left · Red = right · always</div>
+            <div class="section-num">3</div>
+            <div class="section-title">Team Setup</div>
+            <div class="section-hint" id="swapHint">Changes every match</div>
         </div>
-        <div class="toggle-group">
+        <label class="input-label">Side Alignment — <span style="color:var(--text-dim)">Blue = left · Red = right · always</span></label>
+        <div class="toggle-group" style="margin-bottom:18px">
             <div class="toggle-pill selected-allies" id="pill-standard" onclick="setSwap(false)">
                 <div class="pill-label">Standard</div>
                 <div class="pill-teams">
@@ -356,15 +380,7 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- 3: FACTION SELECTOR -->
-    <div class="section">
-        <div class="section-header">
-            <div class="section-num">3</div>
-            <div class="section-title">Faction Selection</div>
-            <div class="section-hint" id="factionHint">Replaces labels in all overlays</div>
-        </div>
+        <label class="input-label">Allied Faction — <span id="factionHint" style="color:var(--text-dim)">Replaces labels in all overlays</span></label>
         <div class="faction-group">
             <!-- Allies side -->
             <div class="faction-pill selected-allied" id="faction-us" onclick="setFaction('US ARMY')">
@@ -400,17 +416,26 @@
             <div class="section-title">Spotlight Player</div>
             <div class="section-hint" id="spotlightHint">Updates overlay within 3 seconds</div>
         </div>
-        <input type="text" id="player" placeholder="Type part of a player name..." oninput="onPlayerInput()">
+        <div style="position:relative;">
+            <input type="text" id="player" placeholder="Type part of a player name..." oninput="onPlayerInput()" autocomplete="off">
+            <div id="playerSuggestions" style="display:none;position:absolute;top:100%;left:0;right:0;z-index:100;background:var(--surface);border:1px solid var(--border-bright);border-radius:6px;margin-top:4px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.4);"></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:8px;">
+            <div style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0;" id="spotlightDot"></div>
+            <div style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;" id="spotlightStatus">Auto mode - showing top infantry killer</div>
+        </div>
     </div>
 
     <!-- OBS LINKS -->
     <!-- 5: TICKER MESSAGES -->
     <div class="section">
-        <div class="section-header">
+        <div class="section-header" onclick="toggleMsgSection()" style="cursor:pointer;user-select:none;">
             <div class="section-num">5</div>
             <div class="section-title">Ticker Messages</div>
             <div class="section-hint" id="msgHint">Injected into Top 5 &amp; Top 10 scroll banners</div>
+            <div class="overlays-toggle" id="msgToggleLabel" style="margin-left:8px;flex-shrink:0;">HIDE ▲</div>
         </div>
+        <div id="msgSectionBody">
 
         <!-- Platform picker -->
         <label class="input-label">Platform Icon — <span>choose what appears next to your message</span></label>
@@ -776,9 +801,75 @@
         saveConfig('swapHint');
     }
 
+    let livePlayerList = [];
+
+    function scoreMatch(playerName, query) {
+        const pl = playerName.toLowerCase();
+        const ql = query.toLowerCase().trim();
+        if (!ql) return -1;
+        if (pl === ql) return 100;
+        if (pl.startsWith(ql)) return 90;
+        const sepIdx = pl.indexOf(ql);
+        if (sepIdx > 0 && ' |_.[('.includes(pl[sepIdx - 1])) return 80;
+        if (pl.includes(ql)) return 50;
+        return -1;
+    }
+
+    function renderPlayerSuggestions(query) {
+        const box = document.getElementById('playerSuggestions');
+        if (!box) return;
+        if (!query.trim() || livePlayerList.length === 0) { box.style.display = 'none'; return; }
+        const scored = livePlayerList
+            .map(function(p) { return { p: p, score: scoreMatch(p.player, query) }; })
+            .filter(function(x) { return x.score >= 0; })
+            .sort(function(a, b) { return b.score - a.score || b.p.kills - a.p.kills; })
+            .slice(0, 6);
+        if (!scored.length) { box.style.display = 'none'; return; }
+        box.innerHTML = scored.map(function(x, i) {
+            const isBest = i === 0 && x.score >= 80;
+            const safeName = x.p.player.replace(/&/g,'&amp;').replace(/"/g,'&quot;');
+            const border = isBest ? 'border-left:3px solid #ff9d00;' : '';
+            const badge = isBest ? '<div style="font-size:8px;color:#ff9d00;font-family:monospace;">BEST MATCH</div>' : '';
+            return '<div onclick="selectPlayerSuggestion(this)" data-name="' + safeName + '" style="padding:10px 14px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);' + border + '">'
+                + '<div style="flex:1;color:white;font-weight:600;">' + x.p.player + '</div>'
+                + '<div style="font-family:monospace;font-size:10px;color:var(--text-dim);">K:' + x.p.kills + '</div>'
+                + badge + '</div>';
+        }).join('');
+        box.style.display = 'block';
+    }
+
+    function selectPlayerSuggestion(el) {
+        const name = el.getAttribute('data-name');
+        document.getElementById('player').value = name;
+        document.getElementById('playerSuggestions').style.display = 'none';
+        updateSpotlightStatus(name);
+        savePlayer('spotlightHint');
+    }
+
+    document.addEventListener('click', function(e) {
+        const box = document.getElementById('playerSuggestions');
+        const input = document.getElementById('player');
+        if (box && input && !box.contains(e.target) && e.target !== input) {
+            box.style.display = 'none';
+        }
+    });
+
+    function updateSpotlightStatus(name) {
+        const dot = document.getElementById('spotlightDot');
+        const status = document.getElementById('spotlightStatus');
+        const isAuto = !name || !name.trim();
+        if (dot) dot.style.background = isAuto ? 'var(--green)' : '#ff9d00';
+        if (status) {
+            status.textContent = isAuto ? 'Auto mode - showing top infantry killer' : 'Currently showing: ' + name.trim();
+            status.style.color = isAuto ? 'var(--text-dim)' : '#ff9d00';
+        }
+    }
+
     function onPlayerInput() {
         clearTimeout(saveTimer);
-        saveTimer = setTimeout(() => savePlayer('spotlightHint'), 150);
+        const query = document.getElementById('player').value;
+        renderPlayerSuggestions(query);
+        saveTimer = setTimeout(() => savePlayer('spotlightHint'), 400);
     }
 
     function updateStatus(apiVal) {
@@ -840,9 +931,72 @@
         renderLinks();
     }
 
+    const VIDEO_URL = '';
+    function initVideoBanner() {
+        const banner = document.getElementById('videoBanner');
+        const link = document.getElementById('videoLink');
+        if (!banner) return;
+        if (localStorage.getItem('hll_video_dismissed') === '1' || !VIDEO_URL) {
+            banner.style.display = 'none'; return;
+        }
+        link.href = VIDEO_URL;
+    }
+    function dismissVideoBanner() {
+        localStorage.setItem('hll_video_dismissed', '1');
+        const banner = document.getElementById('videoBanner');
+        if (banner) banner.style.display = 'none';
+    }
+    initVideoBanner();
+
+    function toggleObsSection() {
+        var body = document.getElementById('overlaysBody');
+        var label = document.getElementById('obsToggleLabel');
+        if (!body || !label) return;
+        if (body.style.display === 'none') {
+            body.style.display = '';
+            label.textContent = 'HIDE ▲';
+            localStorage.removeItem('hll_obs_hidden');
+        } else {
+            body.style.display = 'none';
+            label.textContent = 'SHOW ▼';
+            localStorage.setItem('hll_obs_hidden', '1');
+        }
+    }
+    (function() {
+        var body = document.getElementById('overlaysBody');
+        var label = document.getElementById('obsToggleLabel');
+        if (body && label && localStorage.getItem('hll_obs_hidden') === '1') {
+            body.style.display = 'none';
+            label.textContent = 'SHOW ▼';
+        }
+    })();
+
     loadConfig();
 
     // ── PHONE / DESKTOP MODE DETECTION ──
+    function toggleMsgSection() {
+        var body = document.getElementById('msgSectionBody');
+        var label = document.getElementById('msgToggleLabel');
+        if (!body || !label) return;
+        if (body.style.display === 'none') {
+            body.style.display = '';
+            label.textContent = 'HIDE ▲';
+            localStorage.removeItem('hll_msg_hidden');
+        } else {
+            body.style.display = 'none';
+            label.textContent = 'SHOW ▼';
+            localStorage.setItem('hll_msg_hidden', '1');
+        }
+    }
+    (function() {
+        var body = document.getElementById('msgSectionBody');
+        var label = document.getElementById('msgToggleLabel');
+        if (body && label && localStorage.getItem('hll_msg_hidden') === '1') {
+            body.style.display = 'none';
+            label.textContent = 'SHOW ▼';
+        }
+    })();
+
     function applyLayout() {
         const isPhone = window.innerWidth <= 600;
         document.body.classList.toggle('is-phone', isPhone);
@@ -996,6 +1150,7 @@
             const desktopInput = document.getElementById('player');
             if (document.activeElement !== desktopInput) {
                 desktopInput.value = data.player || '';
+                updateSpotlightStatus(data.player || '');
             }
 
 
