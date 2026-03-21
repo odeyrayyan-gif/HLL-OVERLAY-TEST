@@ -615,6 +615,11 @@
 </div>
 
 <script>
+    window.onerror = function(msg, src, line, col, err) {
+        document.body.style.background = '#1a0000';
+        document.body.innerHTML = '<div style="color:#ff4444;font-family:monospace;padding:20px;font-size:14px;"><b>JS ERROR:</b><br>' + msg + '<br>Line: ' + line + '</div>';
+        return false;
+    };
     // Use the same host that served this page — works from PC (localhost) and phone (192.168.x.x)
     const SERVER = `http://${window.location.hostname}:3001`;
 
