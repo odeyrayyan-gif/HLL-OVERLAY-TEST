@@ -1,11 +1,11 @@
 @echo off
 setlocal enabledelayedexpansion
-title HLL Overlay TEST — Installer
+title HLL Overlay TEST - Installer
 color 0A
 
 echo.
 echo  ============================================================
-echo   HLL COMMAND HUB TEST BUILD — INSTALLER
+echo   HLL COMMAND HUB TEST BUILD - INSTALLER
 echo  ============================================================
 echo.
 
@@ -16,7 +16,7 @@ set BACKUP_DIR=%TEMP%\HLL-Overlay-Backup
 :: ── Check if this is a fresh install or reinstall ────────────
 if exist "%INSTALL_DIR%" (
     echo   Existing installation found at %INSTALL_DIR%
-    echo   This will do a clean reinstall — your API settings
+    echo   This will do a clean reinstall - your API settings
     echo   and saved servers will be preserved.
     echo.
     pause
@@ -39,7 +39,7 @@ if exist "%INSTALL_DIR%" (
     rmdir /s /q "%INSTALL_DIR%"
     echo        Removed %INSTALL_DIR%
 ) else (
-    echo   Fresh installation — no existing files found.
+    echo   Fresh installation - no existing files found.
     echo.
     pause
     echo  [1/5] Skipping backup ^(fresh install^)...
@@ -139,7 +139,7 @@ timeout /t 2 /nobreak >nul
 
 start "HLL Overlay TEST Server" /D "C:\HLL-Overlay-TEST" cmd /k "%PYTHON% DO_NOT_EDIT_server.py"
 timeout /t 3 /nobreak >nul
-:: Open browser — try multiple methods to handle admin/non-admin scenarios
+:: Open browser - try multiple methods to handle admin/non-admin scenarios
 start "" "http://localhost:3000"
 if %errorlevel% neq 0 (
     rundll32 url.dll,FileProtocolHandler http://localhost:3000
