@@ -1155,6 +1155,14 @@
                 desktopInput.value = data.player || '';
                 updateSpotlightStatus(data.player || '');
             }
+            // ── Update live player list via server proxy (no CORS issues) ──
+            if (data.api_endpoint) {
+                try {
+                    const pr = await fetch(`${SERVER}/players?t=` + Date.now(), { cache: 'no-store' });
+                    const pd = await pr.json();
+                    if (pd && pd.players) livePlayerList = pd.players;
+                } catch(e) {}
+            }
 
 
             // ── Sync desktop status bar ──
