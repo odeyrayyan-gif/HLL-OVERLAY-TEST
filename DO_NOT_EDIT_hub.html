@@ -32,16 +32,6 @@
             z-index: 10;
         }
         .shell { position: relative; z-index: 1; width: 100%; max-width: 860px; }
-        .video-banner { display:flex; align-items:center; gap:14px; background:rgba(172,46,46,0.08); border:1px solid rgba(172,46,46,0.3); border-radius:10px; padding:14px 18px; margin-bottom:20px; transition:all 0.3s; }
-        .video-banner:hover { border-color:rgba(172,46,46,0.6); }
-        .video-icon { font-size:22px; flex-shrink:0; }
-        .video-text { flex:1; }
-        .video-text-title { font-size:13px; font-weight:600; color:#fff; letter-spacing:1px; margin-bottom:3px; }
-        .video-text-sub { font-family:'Share Tech Mono',monospace; font-size:10px; color:var(--text-mid); letter-spacing:1px; }
-        .video-link { display:inline-flex; align-items:center; gap:6px; background:var(--red); color:white; border:none; padding:8px 16px; border-radius:6px; font-family:'Oswald',sans-serif; font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; cursor:pointer; text-decoration:none; transition:all 0.2s; flex-shrink:0; }
-        .video-link:hover { background:var(--red-hot); }
-        .video-dismiss { background:transparent; border:1px solid var(--border); color:var(--text-dim); width:26px; height:26px; border-radius:4px; cursor:pointer; font-size:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all 0.2s; }
-        .video-dismiss:hover { border-color:var(--border-bright); color:var(--text-mid); }
 
         .header { text-align: center; margin-bottom: 36px; }
         .header-eyebrow { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--red); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 10px; opacity: 0.8; }
@@ -82,17 +72,7 @@
         .pill-right { color: var(--red); }
         .pill-div { color: var(--text-dim); margin: 0 6px; }
 
-        .overlays-header { display: flex; align-items: center; gap: 12px; margin-bottom: 0; cursor:pointer; user-select:none; }
-        .overlays-body { margin-top: 18px; }
-        .overlays-toggle { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--text-dim); letter-spacing: 1px; flex-shrink: 0; }
-        .checklist { background: rgba(0,162,255,0.06); border: 1px solid rgba(0,162,255,0.2); border-radius: 10px; padding: 18px 20px; margin-bottom: 18px; }
-        .checklist-title { font-family: 'Share Tech Mono', monospace; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; }
-        .checklist-item { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--text-mid); letter-spacing: 1px; margin-bottom: 8px; }
-        .checklist-item.done { color: var(--green); text-decoration: line-through; opacity: 0.5; }
-        .checklist-dot { width: 8px; height: 8px; border-radius: 50%; border: 1px solid var(--border-bright); flex-shrink: 0; }
-        .checklist-item.done .checklist-dot { background: var(--green); border-color: var(--green); }
-        .checklist-dismiss { margin-top: 12px; font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); background: transparent; border: none; cursor: pointer; padding: 0; }
-        .checklist-dismiss:hover { color: var(--text-mid); }
+        .overlays-header { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
         .overlays-title { font-size: 15px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: #fff; }
         .overlays-line { flex: 1; height: 1px; background: var(--border); }
         .overlays-count { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--text-dim); }
@@ -237,7 +217,11 @@
         .faction-divider-text { font-size: 10px; color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase; font-family: 'Share Tech Mono', monospace; }
 
         /* ── PHONE MODE ── */
-        .phone-mode { display: none; background: var(--bg); min-height: 100vh; }
+        .phone-mode { display: none; }
+        @media (max-width: 600px) {
+            .shell { display: none !important; }
+            .phone-mode { display: flex !important; }
+        }
         body.is-phone .shell { display: none !important; }
         body.is-phone .phone-mode {
             display: flex !important;
@@ -295,25 +279,8 @@
     <div class="header">
         <div class="header-eyebrow">Hell Let Loose · Overlay System</div>
         <h1>HLL <span>COMMAND</span> HUB</h1>
-        <div class="header-sub">Local Server · V2.0</div>
+        <div class="header-sub">Local Server · v3.0</div>
         <div class="header-line"></div>
-    </div>
-
-    <div class="video-banner" id="videoBanner">
-        <div class="video-icon">🎬</div>
-        <div class="video-text">
-            <div class="video-text-title">Watch the instructional video</div>
-            <div class="video-text-sub">OBS setup · API config · all overlays explained</div>
-        </div>
-        <a class="video-link" id="videoLink" href="#" target="_blank">▶ WATCH INSTRUCTIONAL VIDEO</a>
-        <button type="button" class="video-dismiss" onclick="dismissVideoBanner()" title="Hide this">✕</button>
-    </div>
-
-    <div class="checklist" id="setupChecklist">
-        <div class="checklist-title">⚡ First Time Setup - complete these steps</div>
-        <div class="checklist-item" id="chk-api"><div class="checklist-dot"></div>Paste your CRCON API URL in Box 1</div>
-        <div class="checklist-item" id="chk-obs"><div class="checklist-dot"></div>Copy OBS URLs from Box 2 and add as browser sources in OBS</div>
-        <button class="checklist-dismiss" onclick="dismissChecklist()">X Hide this checklist</button>
     </div>
 
     <div class="status-bar" id="statusBar">
@@ -354,28 +321,14 @@
         </div>
     </div>
 
-    <div class="section">
-        <div class="overlays-header" onclick="toggleObsSection()">
-            <div class="section-num">2</div>
-            <div class="overlays-title">OBS Browser Sources</div>
-            <div class="overlays-line"></div>
-            <div class="overlays-count" id="overlaysCount">11 OVERLAYS</div>
-            <div class="overlays-toggle" id="obsToggleLabel">HIDE ▲</div>
-        </div>
-        <div class="overlays-body" id="overlaysBody">
-            <div class="link-grid" id="output"></div>
-        </div>
-    </div>
-
-    <!-- 3: TEAM SETUP (swap + faction combined) -->
+    <!-- 2: TEAM SWAP -->
     <div class="section">
         <div class="section-header">
-            <div class="section-num">3</div>
-            <div class="section-title">Team Setup</div>
-            <div class="section-hint" id="swapHint">Changes every match</div>
+            <div class="section-num">2</div>
+            <div class="section-title">Team Side Alignment</div>
+            <div class="section-hint" id="swapHint">Blue = left · Red = right · always</div>
         </div>
-        <label class="input-label">Side Alignment — <span style="color:var(--text-dim)">Blue = left · Red = right · always</span></label>
-        <div class="toggle-group" style="margin-bottom:18px">
+        <div class="toggle-group">
             <div class="toggle-pill selected-allies" id="pill-standard" onclick="setSwap(false)">
                 <div class="pill-label">Standard</div>
                 <div class="pill-teams">
@@ -393,7 +346,15 @@
                 </div>
             </div>
         </div>
-        <label class="input-label">Allied Faction — <span id="factionHint" style="color:var(--text-dim)">Replaces labels in all overlays</span></label>
+    </div>
+
+    <!-- 3: FACTION SELECTOR -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-num">3</div>
+            <div class="section-title">Faction Selection</div>
+            <div class="section-hint" id="factionHint">Replaces labels in all overlays</div>
+        </div>
         <div class="faction-group">
             <!-- Allies side -->
             <div class="faction-pill selected-allied" id="faction-us" onclick="setFaction('US ARMY')">
@@ -429,26 +390,17 @@
             <div class="section-title">Spotlight Player</div>
             <div class="section-hint" id="spotlightHint">Updates overlay within 3 seconds</div>
         </div>
-        <div style="position:relative;">
-            <input type="text" id="player" placeholder="Type part of a player name..." oninput="onPlayerInput()" autocomplete="off">
-            <div id="playerSuggestions" style="display:none;position:absolute;top:100%;left:0;right:0;z-index:100;background:var(--surface);border:1px solid var(--border-bright);border-radius:6px;margin-top:4px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.4);"></div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-top:8px;">
-            <div style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0;" id="spotlightDot"></div>
-            <div style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;" id="spotlightStatus">Auto mode - showing top infantry killer</div>
-        </div>
+        <input type="text" id="player" placeholder="Type part of a player name..." oninput="onPlayerInput()">
     </div>
 
     <!-- OBS LINKS -->
     <!-- 5: TICKER MESSAGES -->
     <div class="section">
-        <div class="section-header" onclick="toggleMsgSection()" style="cursor:pointer;user-select:none;">
+        <div class="section-header">
             <div class="section-num">5</div>
             <div class="section-title">Ticker Messages</div>
             <div class="section-hint" id="msgHint">Injected into Top 5 &amp; Top 10 scroll banners</div>
-            <div class="overlays-toggle" id="msgToggleLabel" style="margin-left:8px;flex-shrink:0;">HIDE ▲</div>
         </div>
-        <div id="msgSectionBody">
 
         <!-- Platform picker -->
         <label class="input-label">Platform Icon — <span>choose what appears next to your message</span></label>
@@ -535,6 +487,15 @@
         </div>
     </div>
 
+    <div class="section">
+        <div class="overlays-header">
+            <div class="overlays-title">OBS Browser Sources</div>
+            <div class="overlays-line"></div>
+            <div class="overlays-count">11 OVERLAYS</div>
+        </div>
+        <div class="link-grid" id="output"></div>
+    </div>
+
     <div class="footer">HLL Command Hub · All config syncs instantly via local server</div>
 </div>
 
@@ -611,7 +572,7 @@
     <!-- Phone: Ticker Messages -->
     <div class="phone-card" id="phone-msg-card">
         <div class="phone-label">
-            <div class="phone-label-num">5</div>
+            <div class="phone-label-num">4</div>
             Ticker Messages
             <span class="phone-hint">toggle &amp; frequency</span>
         </div>
@@ -624,17 +585,17 @@
     const SERVER = `http://${window.location.hostname}:3001`;
 
     const VIEWS = [
-        { n: "Team Comparison",      f: "DO_NOT_EDIT_team_compare.html",        icon: "⚔️",  w: 3840, h: 2160 },
-        { n: "AT Leaderboard",       f: "DO_NOT_EDIT_at_leaderboard.html",      icon: "🚀",  w: 3840, h: 2160 },
-        { n: "Player Spotlight",     f: "DO_NOT_EDIT_player_spotlight.html",    icon: "🎯",  w: 1920, h: 1080 },
-        { n: "Top 5 Scroll Banner",  f: "DO_NOT_EDIT_top5_scroll_banner.html",  icon: "📊",  w: 1920, h: 60   },
-        { n: "Top 10 Scroll Banner", f: "DO_NOT_EDIT_top10_scroll_banner.html", icon: "📋",  w: 1920, h: 60   },
-        { n: "Live Map",             f: "DO_NOT_EDIT_map_overlay.html",         icon: "🗺️",  w: 1920, h: 1080 },
-        { n: "Kill Streaks",         f: "DO_NOT_EDIT_killstreaks.html",         icon: "💀",  w: 1920, h: 1080 },
-        { n: "Kill Feed",            f: "DO_NOT_EDIT_killfeed.html",            icon: "🎯",  w: 1920, h: 1080 },
-        { n: "Tank Scoreboard",      f: "DO_NOT_EDIT_tank_scoreboard.html",     icon: "🛡️",  w: 1920, h: 1080 },
-        { n: "Melee Leaderboard",    f: "DO_NOT_EDIT_melee_leaderboard.html",   icon: "🔪",  w: 3840, h: 2160 },
-        { n: "Message Banner",       f: "DO_NOT_EDIT_message_banner.html",      icon: "💬",  w: 1920, h: 1080 },
+        { n: "Team Comparison",   f: "DO_NOT_EDIT_team_compare.html",              icon: "⚔️"  },
+        { n: "AT Leaderboard",    f: "DO_NOT_EDIT_at_leaderboard.html",          icon: "🚀"  },
+        { n: "Player Spotlight",  f: "DO_NOT_EDIT_player_spotlight.html",          icon: "🎯"  },
+        { n: "Top 5 Scroll Banner",  f: "DO_NOT_EDIT_top5_scroll_banner.html",  icon: "📊"  },
+        { n: "Top 10 Scroll Banner", f: "DO_NOT_EDIT_top10_scroll_banner.html", icon: "📋"  },
+        { n: "Live Map",          f: "DO_NOT_EDIT_map_overlay.html", icon: "🗺️" },
+        { n: "Kill Streaks",      f: "DO_NOT_EDIT_killstreaks.html",               icon: "💀"  },
+        { n: "Kill Feed",          f: "DO_NOT_EDIT_killfeed.html",                  icon: "🎯"  },
+        { n: "Tank Scoreboard",    f: "DO_NOT_EDIT_tank_scoreboard.html",            icon: "🛡️"  },
+        { n: "Melee Leaderboard",  f: "DO_NOT_EDIT_melee_leaderboard.html",          icon: "🔪"  },
+        { n: "Message Banner",     f: "DO_NOT_EDIT_message_banner.html",             icon: "💬"  }
     ];
 
     let saveTimer = null;
@@ -813,75 +774,9 @@
         saveConfig('swapHint');
     }
 
-    let livePlayerList = [];
-
-    function scoreMatch(playerName, query) {
-        const pl = playerName.toLowerCase();
-        const ql = query.toLowerCase().trim();
-        if (!ql) return -1;
-        if (pl === ql) return 100;
-        if (pl.startsWith(ql)) return 90;
-        const sepIdx = pl.indexOf(ql);
-        if (sepIdx > 0 && ' |_.[('.includes(pl[sepIdx - 1])) return 80;
-        if (pl.includes(ql)) return 50;
-        return -1;
-    }
-
-    function renderPlayerSuggestions(query) {
-        const box = document.getElementById('playerSuggestions');
-        if (!box) return;
-        if (!query.trim() || livePlayerList.length === 0) { box.style.display = 'none'; return; }
-        const scored = livePlayerList
-            .map(function(p) { return { p: p, score: scoreMatch(p.player, query) }; })
-            .filter(function(x) { return x.score >= 0; })
-            .sort(function(a, b) { return b.score - a.score || b.p.kills - a.p.kills; })
-            .slice(0, 6);
-        if (!scored.length) { box.style.display = 'none'; return; }
-        box.innerHTML = scored.map(function(x, i) {
-            const isBest = i === 0 && x.score >= 80;
-            const safeName = x.p.player.replace(/&/g,'&amp;').replace(/"/g,'&quot;');
-            const border = isBest ? 'border-left:3px solid #ff9d00;' : '';
-            const badge  = isBest ? '<div style="font-size:8px;color:#ff9d00;font-family:monospace;">BEST MATCH</div>' : '';
-            return '<div onclick="selectPlayerSuggestion(this)" data-name="' + safeName + '" style="padding:10px 14px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);' + border + '">'
-                + '<div style="flex:1;color:white;font-weight:600;">' + x.p.player + '</div>'
-                + '<div style="font-family:monospace;font-size:10px;color:var(--text-dim);">K:' + x.p.kills + '</div>'
-                + badge + '</div>';
-        }).join('');
-        box.style.display = 'block';
-    }
-
-    function selectPlayerSuggestion(el) {
-        const name = el.getAttribute('data-name');
-        document.getElementById('player').value = name;
-        document.getElementById('playerSuggestions').style.display = 'none';
-        updateSpotlightStatus(name);
-        savePlayer('spotlightHint');
-    }
-
-    document.addEventListener('click', function(e) {
-        const box = document.getElementById('playerSuggestions');
-        const input = document.getElementById('player');
-        if (box && input && !box.contains(e.target) && e.target !== input) {
-            box.style.display = 'none';
-        }
-    });
-
-    function updateSpotlightStatus(name) {
-        const dot    = document.getElementById('spotlightDot');
-        const status = document.getElementById('spotlightStatus');
-        const isAuto = !name || !name.trim();
-        if (dot)    dot.style.background = isAuto ? 'var(--green)' : '#ff9d00';
-        if (status) {
-            status.textContent = isAuto ? 'Auto mode - showing top infantry killer' : 'Currently showing: ' + name.trim();
-            status.style.color = isAuto ? 'var(--text-dim)' : '#ff9d00';
-        }
-    }
-
     function onPlayerInput() {
         clearTimeout(saveTimer);
-        const query = document.getElementById('player').value;
-        renderPlayerSuggestions(query);
-        saveTimer = setTimeout(() => savePlayer('spotlightHint'), 400);
+        saveTimer = setTimeout(() => savePlayer('spotlightHint'), 150);
     }
 
     function updateStatus(apiVal) {
@@ -906,10 +801,7 @@
             <div class="link-card">
                 <div class="card-icon">${v.icon}</div>
                 <div class="card-name">${v.n}</div>
-                <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-                    <div class="card-url" style="margin-bottom:0;flex:1">${url}</div>
-                    <div style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text-dim);letter-spacing:1px;white-space:nowrap;">${v.w} x ${v.h}</div>
-                </div>
+                <div class="card-url">${url}</div>
                 <button class="copy-btn" onclick="copyUrl(this, '${url}')">Copy OBS URL</button>
             </div>`;
         }).join('');
@@ -920,8 +812,6 @@
             btn.textContent = '✓ Copied!';
             btn.classList.add('copied');
             setTimeout(() => { btn.textContent = 'Copy OBS URL'; btn.classList.remove('copied'); }, 2000);
-            localStorage.setItem('hll_obs_copied', '1');
-            updateChecklist();
         });
     }
 
@@ -945,91 +835,15 @@
         renderLinks();
     }
 
-    // ── CHECKLIST ──
-    function dismissChecklist() {
-        localStorage.setItem('hll_checklist_dismissed', '1');
-        var el = document.getElementById('setupChecklist');
-        if (el) el.style.display = 'none';
-    }
-    function updateChecklist() {
-        var el = document.getElementById('setupChecklist');
-        if (!el) return;
-        if (localStorage.getItem('hll_checklist_dismissed') === '1') { el.style.display = 'none'; return; }
-        var apiSet  = !!(document.getElementById('api') && document.getElementById('api').value.trim());
-        var obsUsed = localStorage.getItem('hll_obs_copied') === '1';
-        var chkApi  = document.getElementById('chk-api');
-        var chkObs  = document.getElementById('chk-obs');
-        if (chkApi) chkApi.className = 'checklist-item' + (apiSet  ? ' done' : '');
-        if (chkObs) chkObs.className = 'checklist-item' + (obsUsed ? ' done' : '');
-        if (apiSet && obsUsed) { setTimeout(function() { if (el) el.style.display = 'none'; }, 1500); }
-    }
-    updateChecklist();
-    setInterval(updateChecklist, 2000);
-
-    // ── OBS SECTION TOGGLE ──
-    function toggleObsSection() {
-        var body  = document.getElementById('overlaysBody');
-        var label = document.getElementById('obsToggleLabel');
-        if (!body || !label) return;
-        if (body.style.display === 'none') {
-            body.style.display = '';
-            label.textContent = 'HIDE ▲';
-            localStorage.removeItem('hll_obs_hidden');
-        } else {
-            body.style.display = 'none';
-            label.textContent = 'SHOW ▼';
-            localStorage.setItem('hll_obs_hidden', '1');
-        }
-    }
-    (function initObsSection() {
-        var body  = document.getElementById('overlaysBody');
-        var label = document.getElementById('obsToggleLabel');
-        if (body && label && localStorage.getItem('hll_obs_hidden') === '1') {
-            body.style.display = 'none';
-            label.textContent = 'SHOW ▼';
-        }
-    })();
-
-    // ── TICKER SECTION TOGGLE ──
-    function toggleMsgSection() {
-        var body  = document.getElementById('msgSectionBody');
-        var label = document.getElementById('msgToggleLabel');
-        if (!body || !label) return;
-        if (body.style.display === 'none') {
-            body.style.display = '';
-            label.textContent = 'HIDE ▲';
-            localStorage.removeItem('hll_msg_hidden');
-        } else {
-            body.style.display = 'none';
-            label.textContent = 'SHOW ▼';
-            localStorage.setItem('hll_msg_hidden', '1');
-        }
-    }
-    (function initMsgSection() {
-        var body  = document.getElementById('msgSectionBody');
-        var label = document.getElementById('msgToggleLabel');
-        if (body && label && localStorage.getItem('hll_msg_hidden') === '1') {
-            body.style.display = 'none';
-            label.textContent = 'SHOW ▼';
-        }
-    })();
-
-    // ── MARK OBS COPIED IN CHECKLIST ── (patched into copyUrl below)
-
     loadConfig();
 
     // ── PHONE / DESKTOP MODE DETECTION ──
     function applyLayout() {
-        const w = window.innerWidth || document.documentElement.clientWidth || screen.width;
-        const isPhone = w <= 700;
+        const isPhone = window.innerWidth <= 600;
         document.body.classList.toggle('is-phone', isPhone);
     }
-    // Run immediately and on any layout change
     applyLayout();
     window.addEventListener('resize', applyLayout);
-    window.addEventListener('orientationchange', applyLayout);
-    // Run again after load to catch Safari quirks
-    window.addEventListener('load', applyLayout);
 
     // ── PHONE MODE JS ──
     let phoneTimer = null;
@@ -1177,9 +991,7 @@
             const desktopInput = document.getElementById('player');
             if (document.activeElement !== desktopInput) {
                 desktopInput.value = data.player || '';
-                updateSpotlightStatus(data.player || '');
             }
-
 
 
             // ── Sync desktop status bar ──
