@@ -924,6 +924,8 @@
             btn.textContent = '✓ Copied!';
             btn.classList.add('copied');
             setTimeout(() => { btn.textContent = 'Copy OBS URL'; btn.classList.remove('copied'); }, 2000);
+            localStorage.setItem('hll_obs_copied', '1');
+            updateChecklist();
         });
     }
 
@@ -1016,13 +1018,7 @@
         }
     })();
 
-    // ── MARK OBS COPIED IN CHECKLIST ──
-    var _origCopyUrl = copyUrl;
-    copyUrl = function(btn, url) {
-        _origCopyUrl(btn, url);
-        localStorage.setItem('hll_obs_copied', '1');
-        updateChecklist();
-    };
+    // ── MARK OBS COPIED IN CHECKLIST ── (patched into copyUrl below)
 
     loadConfig();
 
@@ -1182,14 +1178,7 @@
                 desktopInput.value = data.player || '';
                 updateSpotlightStatus(data.player || '');
             }
-            // ── Update live player list for dropdown ──
-            if (data.api_endpoint) {
-                try {
-                    const pr = await fetch(data.api_endpoint + (data.api_endpoint.includes('?') ? '&' : '?') + 't=' + Date.now(), { cache: 'no-store', headers: { 'User-Agent': 'Mozilla/5.0' } });
-                    const pd = await pr.json();
-                    if (pd && pd.result && pd.result.stats) livePlayerList = pd.result.stats;
-                } catch(e) {}
-            }
+
 
 
             // ── Sync desktop status bar ──
