@@ -592,10 +592,18 @@
             Spotlight Player
             <span class="phone-hint" id="phoneSpotlightHint">type to search</span>
         </div>
-        <input type="text" class="phone-input" id="phone-player"
-            placeholder="Part of player name..."
-            oninput="onPhonePlayerInput()"
-            autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        <div style="position:relative;">
+            <input type="text" class="phone-input" id="phone-player"
+                placeholder="Part of player name..."
+                oninput="onPhonePlayerInput()"
+                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+            <div id="phonePlayerSuggestions" style="display:none;position:absolute;top:100%;left:0;right:0;z-index:100;background:#0d1117;border:1px solid var(--border-bright);border-radius:6px;margin-top:4px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.6);"></div>
+        </div>
+        <!-- Phone spotlight status -->
+        <div style="display:flex;align-items:center;gap:8px;margin-top:10px;">
+            <div style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0;" id="phoneSpotlightDot"></div>
+            <div style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;" id="phoneSpotlightStatus">Auto mode - showing top infantry killer</div>
+        </div>
         <button class="phone-clear" onclick="clearPhonePlayer()">✕ Clear — Show Top Killer</button>
     </div>
 
@@ -858,14 +866,18 @@
     });
 
     function updateSpotlightStatus(name) {
+        const isAuto = !name || !name.trim();
+        const text = isAuto ? 'Auto mode - showing top infantry killer' : 'Currently showing: ' + name.trim();
+        const color = isAuto ? 'var(--text-dim)' : '#ff9d00';
+        const bgColor = isAuto ? 'var(--green)' : '#ff9d00';
         const dot = document.getElementById('spotlightDot');
         const status = document.getElementById('spotlightStatus');
-        const isAuto = !name || !name.trim();
-        if (dot) dot.style.background = isAuto ? 'var(--green)' : '#ff9d00';
-        if (status) {
-            status.textContent = isAuto ? 'Auto mode - showing top infantry killer' : 'Currently showing: ' + name.trim();
-            status.style.color = isAuto ? 'var(--text-dim)' : '#ff9d00';
-        }
+        const phoneDot = document.getElementById('phoneSpotlightDot');
+        const phoneStatus = document.getElementById('phoneSpotlightStatus');
+        if (dot) dot.style.background = bgColor;
+        if (status) { status.textContent = text; status.style.color = color; }
+        if (phoneDot) phoneDot.style.background = bgColor;
+        if (phoneStatus) { phoneStatus.textContent = text; phoneStatus.style.color = color; }
     }
 
     function onPlayerInput() {
@@ -1104,9 +1116,42 @@
         });
     }
 
+    function renderPhonePlayerSuggestions(query) {
+        const box = document.getElementById('phonePlayerSuggestions');
+        if (!box) return;
+        if (!query.trim() || livePlayerList.length === 0) { box.style.display = 'none'; return; }
+        const scored = livePlayerList
+            .map(function(p) { return { p: p, score: scoreMatch(p.player, query) }; })
+            .filter(function(x) { return x.score >= 0; })
+            .sort(function(a, b) { return b.score - a.score || b.p.kills - a.p.kills; })
+            .slice(0, 6);
+        if (!scored.length) { box.style.display = 'none'; return; }
+        box.innerHTML = scored.map(function(x, i) {
+            const isBest = i === 0 && x.score >= 80;
+            const safeName = x.p.player.replace(/&/g,'&amp;').replace(/"/g,'&quot;');
+            const border = isBest ? 'border-left:3px solid #ff9d00;' : '';
+            const badge = isBest ? '<div style="font-size:8px;color:#ff9d00;font-family:monospace;">BEST</div>' : '';
+            return '<div onclick="selectPhonePlayerSuggestion(this)" data-name="' + safeName + '" style="padding:12px 14px;font-size:14px;cursor:pointer;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);' + border + '">'
+                + '<div style="flex:1;color:white;font-weight:600;">' + x.p.player + '</div>'
+                + '<div style="font-family:monospace;font-size:10px;color:var(--text-dim);">K:' + x.p.kills + '</div>'
+                + badge + '</div>';
+        }).join('');
+        box.style.display = 'block';
+    }
+
+    function selectPhonePlayerSuggestion(el) {
+        const name = el.getAttribute('data-name');
+        document.getElementById('phone-player').value = name;
+        document.getElementById('player').value = name;
+        document.getElementById('phonePlayerSuggestions').style.display = 'none';
+        updateSpotlightStatus(name);
+        savePlayer('spotlightHint');
+    }
+
     function onPhonePlayerInput() {
-        // Keep desktop input in sync
-        document.getElementById('player').value = document.getElementById('phone-player').value;
+        const query = document.getElementById('phone-player').value;
+        document.getElementById('player').value = query;
+        renderPhonePlayerSuggestions(query);
         clearTimeout(phoneTimer);
         phoneTimer = setTimeout(async () => {
             const hint = document.getElementById('phoneSpotlightHint');
@@ -1114,7 +1159,7 @@
             await savePlayer('spotlightHint');
             hint.textContent = '✓ saved'; hint.style.color = 'var(--green)';
             setTimeout(() => { hint.textContent = 'type to search'; hint.style.color = ''; }, 2000);
-        }, 150);
+        }, 400);
     }
 
     async function clearPhonePlayer() {
