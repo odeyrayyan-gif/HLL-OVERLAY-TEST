@@ -1,22 +1,22 @@
 @echo off
 setlocal enabledelayedexpansion
-title HLL Overlay — Installer
+title HLL Overlay TEST - Installer
 color 0A
 
 echo.
 echo  ============================================================
-echo   HLL COMMAND HUB — INSTALLER / UPDATER
+echo   HLL COMMAND HUB TEST BUILD - INSTALLER
 echo  ============================================================
 echo.
 
-set INSTALL_DIR=C:\HLL-Overlay
+set INSTALL_DIR=C:\HLL-Overlay-TEST
 set GITHUB=https://raw.githubusercontent.com/odeyrayyan-gif/HLL-OVERLAY-TEST/main
 set BACKUP_DIR=%TEMP%\HLL-Overlay-Backup
 
 :: ── Check if this is a fresh install or reinstall ────────────
 if exist "%INSTALL_DIR%" (
     echo   Existing installation found at %INSTALL_DIR%
-    echo   This will do a clean reinstall — your API settings
+    echo   This will do a clean reinstall - your API settings
     echo   and saved servers will be preserved.
     echo.
     pause
@@ -39,7 +39,7 @@ if exist "%INSTALL_DIR%" (
     rmdir /s /q "%INSTALL_DIR%"
     echo        Removed %INSTALL_DIR%
 ) else (
-    echo   Fresh installation — no existing files found.
+    echo   Fresh installation - no existing files found.
     echo.
     pause
     echo  [1/5] Skipping backup ^(fresh install^)...
@@ -118,8 +118,10 @@ if exist "%BACKUP_DIR%" rmdir /s /q "%BACKUP_DIR%"
 :: ── Create desktop shortcut ───────────────────────────────────
 echo.
 echo  [5/5] Creating desktop shortcut...
-set SHORTCUT=%USERPROFILE%\Desktop\HLL Overlay.lnk
-powershell -NoProfile -Command "$ws = New-Object -ComObject WScript.Shell; $sc = $ws.CreateShortcut('%SHORTCUT%'); $sc.TargetPath = 'C:\HLL-Overlay\start.bat'; $sc.WorkingDirectory = 'C:\HLL-Overlay'; $sc.IconLocation = 'cmd.exe,0'; $sc.Description = 'HLL Command Hub'; $sc.Save()"
+:: Get actual desktop path via PowerShell (handles OneDrive-moved desktops)
+for /f "usebackq delims=" %%D in (`powershell -NoProfile -Command "[Environment]::GetFolderPath('Desktop')"`) do set DESKTOP=%%D
+set SHORTCUT=!DESKTOP!\HLL Overlay TEST.lnk
+powershell -NoProfile -Command "$ws = New-Object -ComObject WScript.Shell; $sc = $ws.CreateShortcut('!SHORTCUT!'); $sc.TargetPath = 'C:\HLL-Overlay-TEST\start.bat'; $sc.WorkingDirectory = 'C:\HLL-Overlay-TEST'; $sc.IconLocation = 'cmd.exe,0'; $sc.Description = 'HLL Command Hub'; $sc.Save()"
 echo        Desktop shortcut created.
 
 :: ── Done ─────────────────────────────────────────────────────
@@ -129,15 +131,15 @@ echo   INSTALLATION COMPLETE!
 echo  ============================================================
 echo.
 echo   Installed to: C:\HLL-Overlay
-echo   Desktop shortcut: HLL Overlay
+echo   Desktop shortcut: HLL Overlay TEST
 echo.
 echo   Starting HLL Overlay and opening hub...
 echo.
 timeout /t 2 /nobreak >nul
 
-start "HLL Overlay Server" /D "C:\HLL-Overlay" cmd /k "%PYTHON% DO_NOT_EDIT_server.py"
+start "HLL Overlay TEST Server" /D "C:\HLL-Overlay-TEST" cmd /k "%PYTHON% DO_NOT_EDIT_server.py"
 timeout /t 3 /nobreak >nul
-:: Open browser — try multiple methods to handle admin/non-admin scenarios
+:: Open browser - try multiple methods to handle admin/non-admin scenarios
 start "" "http://localhost:3000"
 if %errorlevel% neq 0 (
     rundll32 url.dll,FileProtocolHandler http://localhost:3000
