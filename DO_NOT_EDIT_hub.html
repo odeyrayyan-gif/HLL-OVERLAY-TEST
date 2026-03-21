@@ -635,7 +635,7 @@
     async function saveConfig(hintId) {
         const hint = document.getElementById(hintId);
         hint.textContent = 'SAVING...';
-        hint.style.color = 'var(--text-mid)';
+        hint.style.color = '#718096';
         try {
             const res = await fetch(`${SERVER}/config`, {
                 method: 'POST',
@@ -648,8 +648,8 @@
             const json = await res.json();
             if (!json.ok) throw new Error();
             hint.textContent = '✓ SAVED';
-            hint.style.color = 'var(--green)';
-            setTimeout(() => { hint.textContent = 'Saved instantly to all overlays'; hint.style.color = ''; }, 2000);
+            hint.style.color = '#00ff88';
+            setTimeout(() => { hint.textContent = 'Saved instantly to all overlays'; hint.style.color = '#718096'; }, 2000);
         } catch(e) {
             hint.textContent = 'SAVE FAILED — is DO_NOT_EDIT_server.py running?';
             hint.style.color = '#ff3c3c';
@@ -660,7 +660,7 @@
     async function savePlayer(hintId) {
         const hint = document.getElementById(hintId);
         hint.textContent = 'SAVING...';
-        hint.style.color = 'var(--text-mid)';
+        hint.style.color = '#718096';
         try {
             const res = await fetch(`${SERVER}/player`, {
                 method: 'POST',
@@ -670,8 +670,8 @@
             const json = await res.json();
             if (!json.ok) throw new Error();
             hint.textContent = '✓ SAVED';
-            hint.style.color = 'var(--green)';
-            setTimeout(() => { hint.textContent = 'Updates overlay within 3 seconds'; hint.style.color = ''; }, 2000);
+            hint.style.color = '#00ff88';
+            setTimeout(() => { hint.textContent = 'Updates overlay within 3 seconds'; hint.style.color = '#718096'; }, 2000);
         } catch(e) {
             hint.textContent = 'SAVE FAILED — is DO_NOT_EDIT_server.py running?';
             hint.style.color = '#ff3c3c';
@@ -686,15 +686,15 @@
         currentFaction = name;
         updateFactionPills(name);
         const hint = document.getElementById('factionHint');
-        hint.textContent = 'saving...'; hint.style.color = 'var(--text-mid)';
+        hint.textContent = 'saving...'; hint.style.color = '#718096';
         fetch(`${SERVER}/config`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ allied_faction: name })
         }).then(() => {
             hint.textContent = '✓ saved — overlays updated';
-            hint.style.color = 'var(--green)';
-            setTimeout(() => { hint.textContent = 'Replaces labels in all overlays'; hint.style.color = ''; }, 2000);
+            hint.style.color = '#00ff88';
+            setTimeout(() => { hint.textContent = 'Replaces labels in all overlays'; hint.style.color = '#718096'; }, 2000);
         }).catch(() => {
             hint.textContent = 'SAVE FAILED';
             hint.style.color = '#ff3c3c';
@@ -748,7 +748,7 @@
         if (!url) {
             const hint = document.getElementById('apiHint');
             hint.textContent = 'Paste a URL first'; hint.style.color = '#ff3c3c';
-            setTimeout(() => { hint.textContent = 'Saved instantly to all overlays'; hint.style.color = ''; }, 2000);
+            setTimeout(() => { hint.textContent = 'Saved instantly to all overlays'; hint.style.color = '#718096'; }, 2000);
             return;
         }
         document.getElementById('serverName').value = '';
@@ -768,8 +768,8 @@
         renderServerDropdown(url);
         cancelSaveServer();
         const hint = document.getElementById('apiHint');
-        hint.textContent = `✓ Saved as "${name}"`; hint.style.color = 'var(--green)';
-        setTimeout(() => { hint.textContent = 'Saved instantly to all overlays'; hint.style.color = ''; }, 2500);
+        hint.textContent = `✓ Saved as "${name}"`; hint.style.color = '#00ff88';
+        setTimeout(() => { hint.textContent = 'Saved instantly to all overlays'; hint.style.color = '#718096'; }, 2500);
     }
 
     function cancelSaveServer() {
@@ -787,8 +787,8 @@
         setSavedServers(servers);
         renderServerDropdown('');
         const hint = document.getElementById('apiHint');
-        hint.textContent = `"${name}" removed`; hint.style.color = 'var(--text-mid)';
-        setTimeout(() => { hint.textContent = 'Saved instantly to all overlays'; hint.style.color = ''; }, 2000);
+        hint.textContent = `"${name}" removed`; hint.style.color = '#718096';
+        setTimeout(() => { hint.textContent = 'Saved instantly to all overlays'; hint.style.color = '#718096'; }, 2000);
     }
 
     function onApiInput() {
@@ -849,12 +849,15 @@
         savePlayer('spotlightHint');
     }
 
-    document.addEventListener('click', function(e) {
-        const box = document.getElementById('playerSuggestions');
-        const input = document.getElementById('player');
-        if (box && input && !box.contains(e.target) && e.target !== input) {
-            box.style.display = 'none';
-        }
+    // Close dropdown when clicking outside - deferred to avoid Safari load issues
+    window.addEventListener('load', function() {
+        document.addEventListener('click', function(e) {
+            var box = document.getElementById('playerSuggestions');
+            var input = document.getElementById('player');
+            if (box && input && !box.contains(e.target) && e.target !== input) {
+                box.style.display = 'none';
+            }
+        });
     });
 
     function updateSpotlightStatus(name) {
@@ -1066,14 +1069,14 @@
         updateFactionPills(name);
         updatePhoneFactionPills(name);
         const hint = document.getElementById('phoneFactionHint');
-        hint.textContent = 'saving...'; hint.style.color = 'var(--text-mid)';
+        hint.textContent = 'saving...'; hint.style.color = '#718096';
         fetch(`${SERVER}/config`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ allied_faction: name })
         }).then(() => {
-            hint.textContent = '✓ saved'; hint.style.color = 'var(--green)';
-            setTimeout(() => { hint.textContent = 'tap to select'; hint.style.color = ''; }, 2000);
+            hint.textContent = '✓ saved'; hint.style.color = '#00ff88';
+            setTimeout(() => { hint.textContent = 'tap to select'; hint.style.color = '#718096'; }, 2000);
         });
     }
 
@@ -1097,10 +1100,10 @@
         document.getElementById('phone-pill-standard').className = 'phone-pill' + (!val ? ' selected-allies' : '');
         document.getElementById('phone-pill-swapped').className  = 'phone-pill' + ( val ? ' selected-axis'  : '');
         const hint = document.getElementById('phoneSwapHint');
-        hint.textContent = 'saving...'; hint.style.color = 'var(--text-mid)';
+        hint.textContent = 'saving...'; hint.style.color = '#718096';
         saveConfig('swapHint').then(() => {
-            hint.textContent = '✓ saved'; hint.style.color = 'var(--green)';
-            setTimeout(() => { hint.textContent = 'tap to change'; hint.style.color = ''; }, 2000);
+            hint.textContent = '✓ saved'; hint.style.color = '#00ff88';
+            setTimeout(() => { hint.textContent = 'tap to change'; hint.style.color = '#718096'; }, 2000);
         });
     }
 
@@ -1109,10 +1112,10 @@
         clearTimeout(phoneTimer);
         phoneTimer = setTimeout(async () => {
             var hint = document.getElementById('phoneSpotlightHint');
-            hint.textContent = 'saving...'; hint.style.color = 'var(--text-mid)';
+            hint.textContent = 'saving...'; hint.style.color = '#718096';
             await savePlayer('spotlightHint');
-            hint.textContent = '✓ saved'; hint.style.color = 'var(--green)';
-            setTimeout(function() { hint.textContent = 'type to search'; hint.style.color = ''; }, 2000);
+            hint.textContent = '✓ saved'; hint.style.color = '#00ff88';
+            setTimeout(function() { hint.textContent = 'type to search'; hint.style.color = '#718096'; }, 2000);
         }, 150);
     }
 
@@ -1120,10 +1123,10 @@
         document.getElementById('phone-player').value = '';
         document.getElementById('player').value = '';
         const hint = document.getElementById('phoneSpotlightHint');
-        hint.textContent = 'clearing...'; hint.style.color = 'var(--text-mid)';
+        hint.textContent = 'clearing...'; hint.style.color = '#718096';
         await savePlayer('spotlightHint');
-        hint.textContent = '✓ cleared'; hint.style.color = 'var(--green)';
-        setTimeout(() => { hint.textContent = 'type to search'; hint.style.color = ''; }, 2000);
+        hint.textContent = '✓ cleared'; hint.style.color = '#00ff88';
+        setTimeout(() => { hint.textContent = 'type to search'; hint.style.color = '#718096'; }, 2000);
     }
 
     // Keep phone UI in sync with server state
@@ -1319,7 +1322,7 @@
         if (!text) {
             const hint = document.getElementById('msgHint');
             hint.textContent = 'Type a message first'; hint.style.color = '#ff3c3c';
-            setTimeout(() => { hint.textContent = 'Injected into Top 5 & Top 10 scroll banners'; hint.style.color = ''; }, 2000);
+            setTimeout(() => { hint.textContent = 'Injected into Top 5 & Top 10 scroll banners'; hint.style.color = '#718096'; }, 2000);
             return;
         }
         const msgs = getTickerMessages();
@@ -1337,8 +1340,8 @@
         renderMsgList();
         renderPreview();
         const hint = document.getElementById('msgHint');
-        hint.textContent = '✓ Message added to ticker'; hint.style.color = 'var(--green)';
-        setTimeout(() => { hint.textContent = 'Injected into Top 5 & Top 10 scroll banners'; hint.style.color = ''; }, 2000);
+        hint.textContent = '✓ Message added to ticker'; hint.style.color = '#00ff88';
+        setTimeout(() => { hint.textContent = 'Injected into Top 5 & Top 10 scroll banners'; hint.style.color = '#718096'; }, 2000);
     }
 
     function toggleMessage(id) {
