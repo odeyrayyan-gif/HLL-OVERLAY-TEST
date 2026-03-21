@@ -777,62 +777,58 @@
         saveConfig('swapHint');
     }
 
-    var livePlayerList = [];
+    let livePlayerList = [];
 
     function scoreMatch(playerName, query) {
-        var pl = playerName.toLowerCase();
-        var ql = query.toLowerCase().trim();
+        const pl = playerName.toLowerCase();
+        const ql = query.toLowerCase().trim();
         if (!ql) return -1;
         if (pl === ql) return 100;
         if (pl.startsWith(ql)) return 90;
-        var sepIdx = pl.indexOf(ql);
-        if (sepIdx > 0 && ' |_.[('.indexOf(pl[sepIdx - 1]) >= 0) return 80;
+        const sepIdx = pl.indexOf(ql);
+        if (sepIdx > 0 && ' |_.[('.includes(pl[sepIdx - 1])) return 80;
         if (pl.includes(ql)) return 50;
         return -1;
     }
 
     function renderPlayerSuggestions(query) {
-        var box = document.getElementById('playerSuggestions');
+        const box = document.getElementById('playerSuggestions');
         if (!box) return;
         if (!query || !query.trim() || livePlayerList.length === 0) {
             box.style.display = 'none';
             return;
         }
-        var scored = [];
-        for (var i = 0; i < livePlayerList.length; i++) {
-            var s = scoreMatch(livePlayerList[i].player, query);
-            if (s >= 0) scored.push({ p: livePlayerList[i], score: s });
-        }
-        scored.sort(function(a, b) { return b.score - a.score || b.p.kills - a.p.kills; });
-        scored = scored.slice(0, 6);
+        const scored = livePlayerList
+            .map(p => ({ p, score: scoreMatch(p.player, query) }))
+            .filter(x => x.score >= 0)
+            .sort((a, b) => b.score - a.score || b.p.kills - a.p.kills)
+            .slice(0, 6);
         if (!scored.length) { box.style.display = 'none'; return; }
-        var html = '';
-        for (var j = 0; j < scored.length; j++) {
-            var name = scored[j].p.player.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
-            var isBest = j === 0 && scored[j].score >= 80;
-            html += '<div onclick="selectPlayerSuggestion(this)" data-name="' + name + '" style="padding:10px 14px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:10px;border-bottom:1px solid #1e2530;' + (isBest ? 'border-left:3px solid #ff9d00;' : '') + '">'
-                  + '<div style="flex:1;color:white;font-weight:600;">' + scored[j].p.player + '</div>'
-                  + '<div style="font-size:10px;color:#4a5568;">K:' + scored[j].p.kills + '</div>'
-                  + (isBest ? '<div style="font-size:8px;color:#ff9d00;">BEST</div>' : '')
-                  + '</div>';
-        }
-        box.innerHTML = html;
+        box.innerHTML = scored.map((x, i) => {
+            const isBest = i === 0 && x.score >= 80;
+            const name = x.p.player.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+            return '<div onclick="selectPlayerSuggestion(this)" data-name="' + name + '" style="padding:10px 14px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:10px;border-bottom:1px solid #1e2530;' + (isBest ? 'border-left:3px solid #ff9d00;' : '') + '">'
+                + '<div style="flex:1;color:white;font-weight:600;">' + x.p.player + '</div>'
+                + '<div style="font-size:10px;color:#4a5568;">K:' + x.p.kills + '</div>'
+                + (isBest ? '<div style="font-size:8px;color:#ff9d00;">BEST</div>' : '')
+                + '</div>';
+        }).join('');
         box.style.display = 'block';
     }
 
     function selectPlayerSuggestion(el) {
-        var name = el.getAttribute('data-name');
+        const name = el.getAttribute('data-name');
         document.getElementById('player').value = name;
-        var box = document.getElementById('playerSuggestions');
+        const box = document.getElementById('playerSuggestions');
         if (box) box.style.display = 'none';
         savePlayer('spotlightHint');
     }
 
     function onPlayerInput() {
         clearTimeout(saveTimer);
-        var query = document.getElementById('player').value;
+        const query = document.getElementById('player').value;
         renderPlayerSuggestions(query);
-        saveTimer = setTimeout(function() { savePlayer('spotlightHint'); }, 400);
+        saveTimer = setTimeout(() => savePlayer('spotlightHint'), 400);
     }
 
     function updateStatus(apiVal) {
@@ -1044,14 +1040,14 @@
             }
 
             // ── Sync desktop player input (skip if user is actively typing) ──
-            var desktopInput = document.getElementById('player');
+            const desktopInput = document.getElementById('player');
             if (document.activeElement !== desktopInput) {
                 desktopInput.value = data.player || '';
             }
             if (data.api_endpoint) {
                 try {
-                    var pr = await fetch(SERVER + '/players?t=' + Date.now(), { cache: 'no-store' });
-                    var pd = await pr.json();
+                    const pr = await fetch(`${SERVER}/players?t=${Date.now()}`, { cache: 'no-store' });
+                    const pd = await pr.json();
                     if (pd && pd.players) livePlayerList = pd.players;
                 } catch(e) {}
             }
@@ -1110,6 +1106,13 @@
     // Sync all UI every 2 seconds on every device
     syncAllUI();
     setInterval(syncAllUI, 2000);
+    window.addEventListener('load', function() {
+        document.addEventListener('click', function(e) {
+            const box = document.getElementById('playerSuggestions');
+            const inp = document.getElementById('player');
+            if (box && inp && !box.contains(e.target) && e.target !== inp) box.style.display = 'none';
+        });
+    });
     // ── TICKER MESSAGES ──────────────────────────────────────────────────
     let selectedPlatform = { platform: 'general', icon: 'general' };
     let selectedFreq   = 'every_loop';
