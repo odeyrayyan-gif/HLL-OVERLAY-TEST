@@ -261,6 +261,10 @@
         .phone-pill-label { font-size: 10px; letter-spacing: 2px; color: var(--text-dim); margin-bottom: 8px; text-transform: uppercase; }
         .phone-pill-teams { font-size: 15px; letter-spacing: 2px; font-weight: 700; }
 
+        #phonePlayerSuggestions { display:none; background:#0d1117; border:1px solid #2e3a48; border-radius:6px; margin-top:4px; overflow:hidden; }
+        .phone-suggestion { padding:12px 14px; font-size:14px; cursor:pointer; display:flex; align-items:center; gap:10px; border-bottom:1px solid #1e2530; color:white; font-weight:600; }
+        .phone-suggestion:active { background:rgba(172,46,46,0.2); }
+        .phone-suggestion-stat { font-size:10px; color:#4a5568; font-family:monospace; }
         .phone-input { width: 100%; padding: 16px; background: #070a0f; border: 1px solid var(--border); color: var(--green); border-radius: 8px; font-family: 'Share Tech Mono', monospace; font-size: 16px; outline: none; transition: border-color 0.2s; -webkit-appearance: none; }
         .phone-input:focus { border-color: var(--red); }
         .phone-input::placeholder { color: #2a3040; }
@@ -592,18 +596,11 @@
             Spotlight Player
             <span class="phone-hint" id="phoneSpotlightHint">type to search</span>
         </div>
-        <div style="position:relative;">
-            <input type="text" class="phone-input" id="phone-player"
-                placeholder="Part of player name..."
-                oninput="onPhonePlayerInput()"
-                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-            <div id="phonePlayerSuggestions" style="display:none;position:absolute;top:100%;left:0;right:0;z-index:100;background:#0d1117;border:1px solid var(--border-bright);border-radius:6px;margin-top:4px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.6);"></div>
-        </div>
-        <!-- Phone spotlight status -->
-        <div style="display:flex;align-items:center;gap:8px;margin-top:10px;">
-            <div style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0;" id="phoneSpotlightDot"></div>
-            <div style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;" id="phoneSpotlightStatus">Auto mode - showing top infantry killer</div>
-        </div>
+        <input type="text" class="phone-input" id="phone-player"
+            placeholder="Part of player name..."
+            oninput="onPhonePlayerInput()"
+            autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        <div id="phonePlayerSuggestions"></div>
         <button class="phone-clear" onclick="clearPhonePlayer()">✕ Clear — Show Top Killer</button>
     </div>
 
@@ -1116,49 +1113,57 @@
         });
     }
 
-    function renderPhonePlayerSuggestions(query) {
-        const box = document.getElementById('phonePlayerSuggestions');
+    function showPhoneSuggestions(query) {
+        var box = document.getElementById('phonePlayerSuggestions');
         if (!box) return;
-        if (!query.trim() || livePlayerList.length === 0) { box.style.display = 'none'; return; }
-        const scored = livePlayerList
-            .map(function(p) { return { p: p, score: scoreMatch(p.player, query) }; })
-            .filter(function(x) { return x.score >= 0; })
-            .sort(function(a, b) { return b.score - a.score || b.p.kills - a.p.kills; })
-            .slice(0, 6);
-        if (!scored.length) { box.style.display = 'none'; return; }
-        box.innerHTML = scored.map(function(x, i) {
-            const isBest = i === 0 && x.score >= 80;
-            const safeName = x.p.player.replace(/&/g,'&amp;').replace(/"/g,'&quot;');
-            const border = isBest ? 'border-left:3px solid #ff9d00;' : '';
-            const badge = isBest ? '<div style="font-size:8px;color:#ff9d00;font-family:monospace;">BEST</div>' : '';
-            return '<div onclick="selectPhonePlayerSuggestion(this)" data-name="' + safeName + '" style="padding:12px 14px;font-size:14px;cursor:pointer;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);' + border + '">'
-                + '<div style="flex:1;color:white;font-weight:600;">' + x.p.player + '</div>'
-                + '<div style="font-family:monospace;font-size:10px;color:var(--text-dim);">K:' + x.p.kills + '</div>'
-                + badge + '</div>';
-        }).join('');
+        if (!query || !query.trim() || livePlayerList.length === 0) {
+            box.style.display = 'none';
+            box.innerHTML = '';
+            return;
+        }
+        var scored = [];
+        for (var i = 0; i < livePlayerList.length; i++) {
+            var s = scoreMatch(livePlayerList[i].player, query);
+            if (s >= 0) scored.push({ p: livePlayerList[i], score: s });
+        }
+        scored.sort(function(a, b) { return b.score - a.score || b.p.kills - a.p.kills; });
+        scored = scored.slice(0, 5);
+        if (!scored.length) { box.style.display = 'none'; box.innerHTML = ''; return; }
+        var html = '';
+        for (var j = 0; j < scored.length; j++) {
+            var name = scored[j].p.player.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+            html += '<div class="phone-suggestion" onclick="pickPhoneSuggestion(this)" data-name="' + name + '">'
+                  + '<span style="flex:1">' + scored[j].p.player + '</span>'
+                  + '<span class="phone-suggestion-stat">K:' + scored[j].p.kills + '</span>'
+                  + '</div>';
+        }
+        box.innerHTML = html;
         box.style.display = 'block';
     }
 
-    function selectPhonePlayerSuggestion(el) {
-        const name = el.getAttribute('data-name');
-        document.getElementById('phone-player').value = name;
-        document.getElementById('player').value = name;
-        document.getElementById('phonePlayerSuggestions').style.display = 'none';
+    function pickPhoneSuggestion(el) {
+        var name = el.getAttribute('data-name');
+        var input = document.getElementById('phone-player');
+        var desktopInput = document.getElementById('player');
+        var box = document.getElementById('phonePlayerSuggestions');
+        if (input) input.value = name;
+        if (desktopInput) desktopInput.value = name;
+        if (box) { box.style.display = 'none'; box.innerHTML = ''; }
         updateSpotlightStatus(name);
         savePlayer('spotlightHint');
     }
 
     function onPhonePlayerInput() {
-        const query = document.getElementById('phone-player').value;
+        var query = document.getElementById('phone-player').value;
         document.getElementById('player').value = query;
-        renderPhonePlayerSuggestions(query);
+        showPhoneSuggestions(query);
         clearTimeout(phoneTimer);
         phoneTimer = setTimeout(async () => {
-            const hint = document.getElementById('phoneSpotlightHint');
+            var hint = document.getElementById('phoneSpotlightHint');
             hint.textContent = 'saving...'; hint.style.color = 'var(--text-mid)';
             await savePlayer('spotlightHint');
             hint.textContent = '✓ saved'; hint.style.color = 'var(--green)';
-            setTimeout(() => { hint.textContent = 'type to search'; hint.style.color = ''; }, 2000);
+            setTimeout(function() { hint.textContent = 'type to search'; hint.style.color = ''; }, 2000);
         }, 400);
     }
 
