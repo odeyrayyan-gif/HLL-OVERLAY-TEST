@@ -237,8 +237,8 @@
         .faction-divider-text { font-size: 10px; color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase; font-family: 'Share Tech Mono', monospace; }
 
         /* ── PHONE MODE ── */
-        .phone-mode { display: none; }
-        @media (max-width: 480px) {
+        .phone-mode { display: none; background: var(--bg); min-height: 100vh; }
+        @media (max-width: 600px) {
             .shell { display: none !important; }
             .phone-mode { display: flex !important; }
         }
@@ -1028,7 +1028,7 @@
 
     // ── PHONE / DESKTOP MODE DETECTION ──
     function applyLayout() {
-        const isPhone = window.innerWidth <= 480;
+        const isPhone = window.innerWidth <= 600;
         document.body.classList.toggle('is-phone', isPhone);
     }
     applyLayout();
