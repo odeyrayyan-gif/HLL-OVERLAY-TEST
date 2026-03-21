@@ -365,8 +365,7 @@
         </div>
     </div>
 
-
-<!-- 3: TEAM SETUP -->
+    <!-- 3: TEAM SETUP -->
     <div class="section">
         <div class="section-header">
             <div class="section-num">3</div>
@@ -391,7 +390,7 @@
                     <span class="pill-right">ALLIES</span>
                 </div>
             </div>
-        </div>
+
         <label class="input-label">Allied Faction — <span id="factionHint" style="color:#4a5568">Replaces labels in all overlays</span></label>
         <div class="faction-group">
             <!-- Allies side -->
@@ -826,10 +825,7 @@
     function renderPlayerSuggestions(query) {
         const box = document.getElementById('playerSuggestions');
         if (!box) return;
-        if (!query || !query.trim() || livePlayerList.length === 0) {
-            box.style.display = 'none';
-            return;
-        }
+        if (!query || !query.trim() || livePlayerList.length === 0) { box.style.display = 'none'; return; }
         const scored = livePlayerList
             .map(p => ({ p, score: scoreMatch(p.player, query) }))
             .filter(x => x.score >= 0)
@@ -894,7 +890,13 @@
         }).join('');
     }
 
-
+    function copyUrl(btn, url) {
+        navigator.clipboard.writeText(url).then(() => {
+            btn.textContent = '✓ Copied!';
+            btn.classList.add('copied');
+            setTimeout(() => { btn.textContent = 'Copy OBS URL'; btn.classList.remove('copied'); }, 2000);
+        });
+    }
 
     // ── Load saved config from server on startup ──
     async function loadConfig() {
@@ -916,24 +918,19 @@
         renderLinks();
     }
 
-    // ── VIDEO BANNER ──
     const VIDEO_URL = '';
     function initVideoBanner() {
         const banner = document.getElementById('videoBanner');
         if (!banner) return;
-        if (localStorage.getItem('hll_video_dismissed') === '1' || !VIDEO_URL) {
-            banner.style.display = 'none'; return;
-        }
+        if (localStorage.getItem('hll_video_dismissed') === '1' || !VIDEO_URL) { banner.style.display = 'none'; return; }
         document.getElementById('videoLink').href = VIDEO_URL;
     }
     function dismissVideoBanner() {
         localStorage.setItem('hll_video_dismissed', '1');
-        const banner = document.getElementById('videoBanner');
-        if (banner) banner.style.display = 'none';
+        const b = document.getElementById('videoBanner');
+        if (b) b.style.display = 'none';
     }
     initVideoBanner();
-
-    // ── CHECKLIST ──
     function dismissChecklist() {
         localStorage.setItem('hll_checklist_dismissed', '1');
         const el = document.getElementById('setupChecklist');
@@ -945,74 +942,30 @@
         if (localStorage.getItem('hll_checklist_dismissed') === '1') { el.style.display = 'none'; return; }
         const apiSet = !!(document.getElementById('api') && document.getElementById('api').value.trim());
         const obsUsed = localStorage.getItem('hll_obs_copied') === '1';
-        const chkApi = document.getElementById('chk-api');
-        const chkObs = document.getElementById('chk-obs');
-        if (chkApi) chkApi.className = 'checklist-item' + (apiSet ? ' done' : '');
-        if (chkObs) chkObs.className = 'checklist-item' + (obsUsed ? ' done' : '');
-        if (apiSet && obsUsed) setTimeout(function() { if (el) el.style.display = 'none'; }, 1500);
+        const ca = document.getElementById('chk-api');
+        const co = document.getElementById('chk-obs');
+        if (ca) ca.className = 'checklist-item' + (apiSet ? ' done' : '');
+        if (co) co.className = 'checklist-item' + (obsUsed ? ' done' : '');
+        if (apiSet && obsUsed) setTimeout(function() { const e = document.getElementById('setupChecklist'); if (e) e.style.display = 'none'; }, 1500);
     }
     updateChecklist();
     setInterval(updateChecklist, 2000);
-
-    // ── OBS TOGGLE ──
     function toggleObsSection() {
-        const body = document.getElementById('overlaysBody');
-        const label = document.getElementById('obsToggleLabel');
-        if (!body || !label) return;
-        if (body.style.display === 'none') {
-            body.style.display = '';
-            label.textContent = 'HIDE ▲';
-            localStorage.removeItem('hll_obs_hidden');
-        } else {
-            body.style.display = 'none';
-            label.textContent = 'SHOW ▼';
-            localStorage.setItem('hll_obs_hidden', '1');
-        }
+        const b = document.getElementById('overlaysBody');
+        const l = document.getElementById('obsToggleLabel');
+        if (!b || !l) return;
+        if (b.style.display === 'none') { b.style.display = ''; l.textContent = 'HIDE ▲'; localStorage.removeItem('hll_obs_hidden'); }
+        else { b.style.display = 'none'; l.textContent = 'SHOW ▼'; localStorage.setItem('hll_obs_hidden', '1'); }
     }
-    (function() {
-        const body = document.getElementById('overlaysBody');
-        const label = document.getElementById('obsToggleLabel');
-        if (body && label && localStorage.getItem('hll_obs_hidden') === '1') {
-            body.style.display = 'none';
-            label.textContent = 'SHOW ▼';
-        }
-    })();
-
-    // ── TICKER TOGGLE ──
+    (function() { const b = document.getElementById('overlaysBody'); const l = document.getElementById('obsToggleLabel'); if (b && l && localStorage.getItem('hll_obs_hidden') === '1') { b.style.display = 'none'; l.textContent = 'SHOW ▼'; } })();
     function toggleMsgSection() {
-        const body = document.getElementById('msgSectionBody');
-        const label = document.getElementById('msgToggleLabel');
-        if (!body || !label) return;
-        if (body.style.display === 'none') {
-            body.style.display = '';
-            label.textContent = 'HIDE ▲';
-            localStorage.removeItem('hll_msg_hidden');
-        } else {
-            body.style.display = 'none';
-            label.textContent = 'SHOW ▼';
-            localStorage.setItem('hll_msg_hidden', '1');
-        }
+        const b = document.getElementById('msgSectionBody');
+        const l = document.getElementById('msgToggleLabel');
+        if (!b || !l) return;
+        if (b.style.display === 'none') { b.style.display = ''; l.textContent = 'HIDE ▲'; localStorage.removeItem('hll_msg_hidden'); }
+        else { b.style.display = 'none'; l.textContent = 'SHOW ▼'; localStorage.setItem('hll_msg_hidden', '1'); }
     }
-    (function() {
-        const body = document.getElementById('msgSectionBody');
-        const label = document.getElementById('msgToggleLabel');
-        if (body && label && localStorage.getItem('hll_msg_hidden') === '1') {
-            body.style.display = 'none';
-            label.textContent = 'SHOW ▼';
-        }
-    })();
-
-    // ── MARK OBS COPIED ──
-    function copyUrl(btn, url) {
-        navigator.clipboard.writeText(url).then(() => {
-            btn.textContent = '✓ Copied!';
-            btn.classList.add('copied');
-            setTimeout(() => { btn.textContent = 'Copy OBS URL'; btn.classList.remove('copied'); }, 2000);
-            localStorage.setItem('hll_obs_copied', '1');
-            updateChecklist();
-        });
-    }
-
+    (function() { const b = document.getElementById('msgSectionBody'); const l = document.getElementById('msgToggleLabel'); if (b && l && localStorage.getItem('hll_msg_hidden') === '1') { b.style.display = 'none'; l.textContent = 'SHOW ▼'; } })();
     loadConfig();
 
     // ── PHONE / DESKTOP MODE DETECTION ──
@@ -1120,56 +1073,17 @@
         });
     }
 
-    async function onPhonePlayerInput() {
-        const query = document.getElementById('phone-player').value;
-        document.getElementById('player').value = query;
-        // Fetch players on demand if list is empty
-        if (livePlayerList.length === 0) {
-            try {
-                const pr = await fetch(`${SERVER}/players?t=${Date.now()}`, { cache: 'no-store' });
-                const pd = await pr.json();
-                if (pd && pd.players) livePlayerList = pd.players;
-            } catch(e) {}
-        }
-        // Show suggestions in phone dropdown
-        const box = document.getElementById('phoneSuggestions');
-        if (box && query.trim() && livePlayerList.length > 0) {
-            const scored = livePlayerList
-                .map(p => ({ p, score: scoreMatch(p.player, query) }))
-                .filter(x => x.score >= 0)
-                .sort((a, b) => b.score - a.score || b.p.kills - a.p.kills)
-                .slice(0, 5);
-            if (scored.length) {
-                box.innerHTML = scored.map((x, i) => {
-                    const isBest = i === 0 && x.score >= 80;
-                    const name = x.p.player.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
-                    return '<div onclick="selectPhoneSuggestion(this)" ontouchend="selectPhoneSuggestion(this)" data-name="' + name + '" style="padding:14px;font-size:14px;cursor:pointer;border-bottom:1px solid #1e2530;color:white;-webkit-tap-highlight-color:rgba(172,46,46,0.3);' + (isBest ? 'border-left:3px solid #ff9d00;' : '') + '">' + x.p.player + ' <span style="font-size:10px;color:#4a5568;">K:' + x.p.kills + '</span></div>';
-                }).join('');
-                box.style.display = 'block';
-            } else {
-                box.style.display = 'none';
-            }
-        } else if (box) {
-            box.style.display = 'none';
-        }
+    function onPhonePlayerInput() {
+        // Keep desktop input in sync
+        document.getElementById('player').value = document.getElementById('phone-player').value;
         clearTimeout(phoneTimer);
         phoneTimer = setTimeout(async () => {
             const hint = document.getElementById('phoneSpotlightHint');
-            hint.textContent = 'saving...';
+            hint.textContent = 'saving...'; hint.style.color = '#718096';
             await savePlayer('spotlightHint');
-            hint.textContent = '✓ saved';
-            setTimeout(() => { hint.textContent = 'type to search'; }, 2000);
-        }, 400);
-    }
-
-    function selectPhoneSuggestion(el) {
-        if (event) event.preventDefault();
-        const name = el.getAttribute('data-name');
-        document.getElementById('phone-player').value = name;
-        document.getElementById('player').value = name;
-        const box = document.getElementById('phoneSuggestions');
-        if (box) box.style.display = 'none';
-        savePlayer('spotlightHint');
+            hint.textContent = '✓ saved'; hint.style.color = '#00ff88';
+            setTimeout(() => { hint.textContent = 'type to search'; hint.style.color = '#718096'; }, 2000);
+        }, 150);
     }
 
     async function clearPhonePlayer() {
