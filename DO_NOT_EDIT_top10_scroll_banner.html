@@ -61,7 +61,7 @@
 </div>
 
 <script>
-    const CONFIG_URL = "http://localhost:3000/config";
+    const CONFIG_URL = "http://localhost:3001/config";
 
     async function fetchNoCache(url) {
         const sep = url.includes("?") ? "&" : "?";
@@ -70,7 +70,7 @@
 
     async function getEndpoint() {
         try {
-            const r = await fetch("http://localhost:3000/config");
+            const r = await fetch("http://localhost:3001/config");
             if (!r.ok) return "";
             const settings = await r.json();
             return settings.api_endpoint || "";

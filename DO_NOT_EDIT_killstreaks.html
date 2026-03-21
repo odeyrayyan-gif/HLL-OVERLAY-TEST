@@ -135,7 +135,7 @@
     </div>
 
 <script>
-const CONFIG_URL = "http://localhost:3000/config";
+const CONFIG_URL = "http://localhost:3001/config";
 const REFRESH_MS = 1000;
 const ALERT_THRESHOLDS = [5, 10, 15, 20, 25];
 
@@ -154,7 +154,7 @@ async function fetchNoCache(url) {
 
 async function getEndpoint() {
     try {
-        const r = await fetch("http://localhost:3000/config");
+        const r = await fetch("http://localhost:3001/config");
         if (!r.ok) return "";
         const settings = await r.json();
         return settings.api_endpoint || "";
@@ -317,7 +317,7 @@ async function poll() {
 let cachedKSEndpoint = "";
 async function pollKSConfig() {
     try {
-        const r = await fetch("http://localhost:3000/config?t=" + Date.now(), { cache: "no-store" });
+        const r = await fetch("http://localhost:3001/config?t=" + Date.now(), { cache: "no-store" });
         if (!r.ok) throw new Error("config " + r.status);
         const cfg = await r.json();
         if (cfg && cfg.api_endpoint !== undefined) cachedKSEndpoint = cfg.api_endpoint || "";

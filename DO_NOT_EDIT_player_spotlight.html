@@ -178,8 +178,8 @@
 </div>
 
 <script>
-const CONFIG_URL = "http://localhost:3000/config";
-const PLAYER_URL = "http://localhost:3000/player";
+const CONFIG_URL = "http://localhost:3001/config";
+const PLAYER_URL = "http://localhost:3001/player";
 const REFRESH = 3000;
 
 const EXCLUDED_WEAPONS = [
@@ -255,7 +255,7 @@ function render(p){
 
     // Exclude armor crews and artillery gunners from infantry lists
     const EXCLUDED_WEAPONS_LIST = [
-        'artillery','lefh','155mm','152mm','150mm','122mm','105mm','howitzer','brumm','stuh','strumpanzer','pak40','anti_tank',
+        'artillery','lefh','155mm','152mm','150mm','122mm','105mm','howitzer','sfh','brumm','stuh','strumpanzer','pak40','anti_tank',
         'zis3','88mm','75mm','76mm','tank','mine'
     ];
     function isArtyOrArmor(p) {

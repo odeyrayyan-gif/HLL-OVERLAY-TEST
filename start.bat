@@ -34,7 +34,7 @@ if errorlevel 1 (
 echo  ============================================================
 echo   HLL OVERLAY SERVER
 echo  ============================================================
-echo   Hub:  http://localhost:3000
+echo   Hub:  http://localhost:3001
 echo   Keep this window open while streaming.
 echo  ============================================================
 echo.

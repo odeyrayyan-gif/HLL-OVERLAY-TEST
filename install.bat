@@ -140,9 +140,9 @@ timeout /t 2 /nobreak >nul
 start "HLL Overlay TEST Server" /D "C:\HLL-Overlay-TEST" cmd /k "%PYTHON% DO_NOT_EDIT_server.py"
 timeout /t 3 /nobreak >nul
 :: Open browser - try multiple methods to handle admin/non-admin scenarios
-start "" "http://localhost:3000"
+start "" "http://localhost:3001"
 if %errorlevel% neq 0 (
-    rundll32 url.dll,FileProtocolHandler http://localhost:3000
+    rundll32 url.dll,FileProtocolHandler http://localhost:3001
 )
 
 echo   Done! The hub should open in your browser shortly.

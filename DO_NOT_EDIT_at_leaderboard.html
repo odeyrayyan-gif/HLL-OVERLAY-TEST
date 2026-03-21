@@ -73,7 +73,7 @@
 </div>
 
 <script>
-const CONFIG_URL = "http://localhost:3000/config";
+const CONFIG_URL = "http://localhost:3001/config";
 // Synced Keys from Code 1 & 2
 const AT_KEYS = ["bazooka", "panzerschreck", "piat", "panzerfaust"];
 const AXIS_SIGS = ["kar98", "mp40", "mg34", "mg42", "stg44", "fg42", "gewehr", "zf41", "p38", "luger", "walther", "stielhandgranate", "tiger", "panzer", "puma", "lux", "marder", "lefh", "pak40", "panzerfaust"];
@@ -83,7 +83,7 @@ async function fetchNoCache(url) {
     return fetch(url + sep + "t=" + Date.now(), { cache: "no-store", headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" } });
 }
 async function getConfig() {
-    return fetch("http://localhost:3000/config").then(r => r.json());
+    return fetch("http://localhost:3001/config").then(r => r.json());
 }
 
 function render(hunters) {

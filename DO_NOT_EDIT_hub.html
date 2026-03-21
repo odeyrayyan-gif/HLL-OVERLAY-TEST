@@ -32,33 +32,16 @@
             z-index: 10;
         }
         .shell { position: relative; z-index: 1; width: 100%; max-width: 860px; }
-
-        .video-banner {
-            display: flex; align-items: center; gap: 14px;
-            background: rgba(172,46,46,0.08); border: 1px solid rgba(172,46,46,0.3);
-            border-radius: 10px; padding: 14px 18px; margin-bottom: 20px;
-            position: relative; transition: all 0.3s;
-        }
-        .video-banner:hover { border-color: rgba(172,46,46,0.6); }
-        .video-icon { font-size: 22px; flex-shrink: 0; }
-        .video-text { flex: 1; }
-        .video-text-title { font-size: 13px; font-weight: 600; color: #fff; letter-spacing: 1px; margin-bottom: 3px; }
-        .video-text-sub { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--text-mid); letter-spacing: 1px; }
-        .video-link {
-            display: inline-flex; align-items: center; gap: 6px;
-            background: var(--red); color: white; border: none;
-            padding: 8px 16px; border-radius: 6px; font-family: 'Oswald', sans-serif;
-            font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-            cursor: pointer; text-decoration: none; transition: all 0.2s; flex-shrink: 0;
-        }
-        .video-link:hover { background: var(--red-hot); }
-        .video-dismiss {
-            background: transparent; border: 1px solid var(--border);
-            color: var(--text-dim); width: 26px; height: 26px; border-radius: 4px;
-            cursor: pointer; font-size: 14px; display: flex; align-items: center;
-            justify-content: center; flex-shrink: 0; transition: all 0.2s;
-        }
-        .video-dismiss:hover { border-color: var(--border-bright); color: var(--text-mid); }
+        .video-banner { display:flex; align-items:center; gap:14px; background:rgba(172,46,46,0.08); border:1px solid rgba(172,46,46,0.3); border-radius:10px; padding:14px 18px; margin-bottom:20px; transition:all 0.3s; }
+        .video-banner:hover { border-color:rgba(172,46,46,0.6); }
+        .video-icon { font-size:22px; flex-shrink:0; }
+        .video-text { flex:1; }
+        .video-text-title { font-size:13px; font-weight:600; color:#fff; letter-spacing:1px; margin-bottom:3px; }
+        .video-text-sub { font-family:'Share Tech Mono',monospace; font-size:10px; color:var(--text-mid); letter-spacing:1px; }
+        .video-link { display:inline-flex; align-items:center; gap:6px; background:var(--red); color:white; border:none; padding:8px 16px; border-radius:6px; font-family:'Oswald',sans-serif; font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; cursor:pointer; text-decoration:none; transition:all 0.2s; flex-shrink:0; }
+        .video-link:hover { background:var(--red-hot); }
+        .video-dismiss { background:transparent; border:1px solid var(--border); color:var(--text-dim); width:26px; height:26px; border-radius:4px; cursor:pointer; font-size:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all 0.2s; }
+        .video-dismiss:hover { border-color:var(--border-bright); color:var(--text-mid); }
 
         .header { text-align: center; margin-bottom: 36px; }
         .header-eyebrow { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--red); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 10px; opacity: 0.8; }
@@ -99,48 +82,10 @@
         .pill-right { color: var(--red); }
         .pill-div { color: var(--text-dim); margin: 0 6px; }
 
-        .overlays-header { display: flex; align-items: center; gap: 12px; margin-bottom: 0; cursor: pointer; user-select: none; }
-        .overlays-header:hover .overlays-title { color: var(--text); }
-        .overlays-title { font-size: 15px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: #fff; transition: color 0.2s; }
+        .overlays-header { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+        .overlays-title { font-size: 15px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: #fff; }
         .overlays-line { flex: 1; height: 1px; background: var(--border); }
         .overlays-count { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--text-dim); }
-        .overlays-toggle { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--text-dim); letter-spacing: 1px; flex-shrink: 0; transition: color 0.2s; }
-        .overlays-header:hover .overlays-toggle { color: var(--text-mid); }
-        .overlays-body { margin-top: 18px; }
-        .link-card.is-new { border-color: rgba(0,255,136,0.4); }
-        .link-card.is-new::before { opacity: 1; background: var(--green); }
-        .new-badge { display: inline-block; font-family: 'Share Tech Mono', monospace; font-size: 8px; letter-spacing: 2px; text-transform: uppercase; background: rgba(0,255,136,0.15); border: 1px solid rgba(0,255,136,0.4); color: var(--green); padding: 2px 6px; border-radius: 3px; margin-left: 6px; vertical-align: middle; }
-
-        /* First-time checklist */
-        .checklist { background: rgba(0,162,255,0.06); border: 1px solid rgba(0,162,255,0.2); border-radius: 10px; padding: 18px 20px; margin-bottom: 18px; }
-        .checklist-title { font-family: 'Share Tech Mono', monospace; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; }
-        .checklist-items { display: flex; flex-direction: column; gap: 8px; }
-        .checklist-item { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--text-mid); letter-spacing: 1px; }
-        .checklist-item.done { color: var(--green); text-decoration: line-through; opacity: 0.5; }
-        .checklist-dot { width: 8px; height: 8px; border-radius: 50%; border: 1px solid var(--border-bright); flex-shrink: 0; }
-        .checklist-item.done .checklist-dot { background: var(--green); border-color: var(--green); }
-        .checklist-dismiss { margin-top: 12px; font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); background: transparent; border: none; cursor: pointer; padding: 0; }
-        .checklist-dismiss:hover { color: var(--text-mid); }
-
-        /* Player dropdown */
-        .player-dropdown { position: relative; }
-        .player-suggestions {
-            position: absolute; top: 100%; left: 0; right: 0; z-index: 100;
-            background: var(--surface); border: 1px solid var(--border-bright);
-            border-radius: 6px; margin-top: 4px; overflow: hidden;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-        }
-        .player-suggestion {
-            padding: 10px 14px; font-size: 13px; cursor: pointer;
-            display: flex; align-items: center; gap: 10px;
-            border-bottom: 1px solid var(--border); transition: background 0.1s;
-        }
-        .player-suggestion:last-child { border-bottom: none; }
-        .player-suggestion:hover { background: rgba(172,46,46,0.12); }
-        .player-suggestion.best-match { border-left: 3px solid #ff9d00; }
-        .player-suggestion-name { flex: 1; color: white; font-weight: 600; }
-        .player-suggestion-stats { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--text-dim); letter-spacing: 1px; }
-        .player-suggestion-badge { font-family: 'Share Tech Mono', monospace; font-size: 8px; letter-spacing: 1px; color: #ff9d00; text-transform: uppercase; }
 
         .link-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .link-card { background: #070a0f; border: 1px solid var(--border); border-radius: 8px; padding: 16px; transition: all 0.2s; position: relative; overflow: hidden; }
@@ -348,7 +293,6 @@
         <div class="header-line"></div>
     </div>
 
-    <!-- Video Guide Banner — hidden once dismissed -->
     <div class="video-banner" id="videoBanner">
         <div class="video-icon">🎬</div>
         <div class="video-text">
@@ -366,34 +310,6 @@
     </div>
 
     <!-- 1: API URL -->
-    <!-- ── FIRST TIME CHECKLIST ── -->
-    <div class="checklist" id="setupChecklist">
-        <div class="checklist-title">⚡ First Time Setup — complete these steps</div>
-        <div class="checklist-items">
-            <div class="checklist-item" id="chk-api">
-                <div class="checklist-dot"></div>Paste your CRCON API URL in Box 1
-            </div>
-            <div class="checklist-item" id="chk-obs">
-                <div class="checklist-dot"></div>Copy OBS URLs from Box 2 and add as browser sources in OBS
-            </div>
-        </div>
-        <button class="checklist-dismiss" onclick="dismissChecklist()">✕ Hide this checklist</button>
-    </div>
-
-    <!-- ── OBS BROWSER SOURCES (Box 2 position — most used after API) ── -->
-    <div class="section" id="obsSection">
-        <div class="overlays-header" onclick="toggleObsSection()">
-            <div class="section-num">2</div>
-            <div class="overlays-title">OBS Browser Sources</div>
-            <div class="overlays-line"></div>
-            <div class="overlays-count" id="overlaysCount">11 OVERLAYS</div>
-            <div class="overlays-toggle" id="overlaysToggleLabel">HIDE ▲</div>
-        </div>
-        <div class="overlays-body" id="overlaysBody">
-            <div class="link-grid" id="output" style="margin-top:0"></div>
-        </div>
-    </div>
-
     <div class="section">
         <div class="section-header">
             <div class="section-num">1</div>
@@ -425,16 +341,14 @@
         </div>
     </div>
 
-    <!-- 3: TEAM SETUP (Side Alignment + Faction combined) -->
+    <!-- 2: TEAM SWAP -->
     <div class="section">
         <div class="section-header">
-            <div class="section-num">3</div>
-            <div class="section-title">Team Setup</div>
-            <div class="section-hint" id="swapHint">Changes every match</div>
+            <div class="section-num">2</div>
+            <div class="section-title">Team Side Alignment</div>
+            <div class="section-hint" id="swapHint">Blue = left · Red = right · always</div>
         </div>
-
-        <label class="input-label">Side Alignment — <span style="color:var(--text-dim)">Blue = left · Red = right · always</span></label>
-        <div class="toggle-group" style="margin-bottom:18px">
+        <div class="toggle-group">
             <div class="toggle-pill selected-allies" id="pill-standard" onclick="setSwap(false)">
                 <div class="pill-label">Standard</div>
                 <div class="pill-teams">
@@ -452,9 +366,17 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <label class="input-label">Allied Faction — <span id="factionHint" style="color:var(--text-dim)">Replaces labels in all overlays</span></label>
+    <!-- 3: FACTION SELECTOR -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-num">3</div>
+            <div class="section-title">Faction Selection</div>
+            <div class="section-hint" id="factionHint">Replaces labels in all overlays</div>
+        </div>
         <div class="faction-group">
+            <!-- Allies side -->
             <div class="faction-pill selected-allied" id="faction-us" onclick="setFaction('US ARMY')">
                 <div class="faction-name" style="color:#3b82f6">US ARMY</div>
                 <div class="faction-sub">Allied · United States</div>
@@ -467,11 +389,13 @@
                 <div class="faction-name" style="color:#3b82f6">SOVIETS</div>
                 <div class="faction-sub">Allied · Soviet Union</div>
             </div>
+            <!-- Divider -->
             <div class="faction-divider">
                 <div class="faction-divider-line"></div>
                 <div class="faction-divider-text">vs</div>
                 <div class="faction-divider-line"></div>
             </div>
+            <!-- Axis — always Germany -->
             <div class="faction-pill selected-axis" id="faction-germany" style="grid-column: 1 / span 2; pointer-events: none;">
                 <div class="faction-name" style="color:var(--red)">GERMANY</div>
                 <div class="faction-sub">Axis · Wehrmacht / always</div>
@@ -486,26 +410,24 @@
             <div class="section-title">Spotlight Player</div>
             <div class="section-hint" id="spotlightHint">Updates overlay within 3 seconds</div>
         </div>
-        <div class="player-dropdown" id="playerDropdown">
+        <div style="position:relative;">
             <input type="text" id="player" placeholder="Type part of a player name..." oninput="onPlayerInput()" autocomplete="off">
-            <div class="player-suggestions" id="playerSuggestions" style="display:none"></div>
+            <div id="playerSuggestions" style="display:none;position:absolute;top:100%;left:0;right:0;z-index:100;background:var(--surface);border:1px solid var(--border-bright);border-radius:6px;margin-top:4px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.4);"></div>
         </div>
         <div style="display:flex;align-items:center;gap:8px;margin-top:8px;">
             <div style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0;" id="spotlightDot"></div>
-            <div style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;" id="spotlightStatus">Auto mode — showing top infantry killer</div>
+            <div style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;" id="spotlightStatus">Auto mode - showing top infantry killer</div>
         </div>
     </div>
 
     <!-- OBS LINKS -->
-    <!-- 6: TICKER MESSAGES -->
+    <!-- 5: TICKER MESSAGES -->
     <div class="section">
-        <div class="section-header" onclick="toggleMsgSection()" style="cursor:pointer;user-select:none;">
+        <div class="section-header">
             <div class="section-num">5</div>
             <div class="section-title">Ticker Messages</div>
             <div class="section-hint" id="msgHint">Injected into Top 5 &amp; Top 10 scroll banners</div>
-            <div class="overlays-toggle" id="msgToggleLabel" style="margin-left:8px;flex-shrink:0">HIDE ▲</div>
         </div>
-        <div id="msgSectionBody">
 
         <!-- Platform picker -->
         <label class="input-label">Platform Icon — <span>choose what appears next to your message</span></label>
@@ -590,10 +512,16 @@
                 </div>
             </div>
         </div>
-        </div><!-- end msgSectionBody -->
     </div>
 
-
+    <div class="section">
+        <div class="overlays-header">
+            <div class="overlays-title">OBS Browser Sources</div>
+            <div class="overlays-line"></div>
+            <div class="overlays-count">11 OVERLAYS</div>
+        </div>
+        <div class="link-grid" id="output"></div>
+    </div>
 
     <div class="footer">HLL Command Hub · All config syncs instantly via local server</div>
 </div>
@@ -610,16 +538,32 @@
         <div class="phone-status-text" id="phoneStatus">Loading...</div>
     </div>
 
-    <!-- Phone Box 3: Team Setup (matches desktop Box 3) -->
     <div class="phone-card">
         <div class="phone-label">
-            <div class="phone-label-num">3</div>
-            Team Setup
+            <div class="phone-label-num">1</div>
+            Allied Faction
+            <span class="phone-hint" id="phoneFactionHint">tap to select</span>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:8px;">
+            <div class="phone-pill" id="phone-faction-us" onclick="phoneSetFaction('US ARMY')" style="padding:10px 6px;">
+                <div style="font-size:11px; font-weight:700; color:#3b82f6; letter-spacing:1px;">US ARMY</div>
+            </div>
+            <div class="phone-pill" id="phone-faction-british" onclick="phoneSetFaction('BRITISH')" style="padding:10px 6px;">
+                <div style="font-size:11px; font-weight:700; color:#3b82f6; letter-spacing:1px;">BRITISH</div>
+            </div>
+            <div class="phone-pill" id="phone-faction-soviet" onclick="phoneSetFaction('SOVIETS')" style="padding:10px 6px;">
+                <div style="font-size:11px; font-weight:700; color:#3b82f6; letter-spacing:1px;">SOVIETS</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="phone-card">
+        <div class="phone-label">
+            <div class="phone-label-num">2</div>
+            Team Side Alignment
             <span class="phone-hint" id="phoneSwapHint">tap to change</span>
         </div>
-
-        <div style="font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;margin-bottom:8px;">Side Alignment</div>
-        <div class="phone-toggle" style="margin-bottom:14px">
+        <div class="phone-toggle">
             <div class="phone-pill selected-allies" id="phone-pill-standard" onclick="phoneSetSwap(false)">
                 <div class="phone-pill-label">Standard</div>
                 <div class="phone-pill-teams">
@@ -637,25 +581,11 @@
                 </div>
             </div>
         </div>
-
-        <div style="font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;margin-bottom:8px;">Allied Faction <span id="phoneFactionHint" style="color:var(--text-dim)"></span></div>
-        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;">
-            <div class="phone-pill" id="phone-faction-us" onclick="phoneSetFaction('US ARMY')" style="padding:10px 6px;">
-                <div style="font-size:11px; font-weight:700; color:#3b82f6; letter-spacing:1px;">US ARMY</div>
-            </div>
-            <div class="phone-pill" id="phone-faction-british" onclick="phoneSetFaction('BRITISH')" style="padding:10px 6px;">
-                <div style="font-size:11px; font-weight:700; color:#3b82f6; letter-spacing:1px;">BRITISH</div>
-            </div>
-            <div class="phone-pill" id="phone-faction-soviet" onclick="phoneSetFaction('SOVIETS')" style="padding:10px 6px;">
-                <div style="font-size:11px; font-weight:700; color:#3b82f6; letter-spacing:1px;">SOVIETS</div>
-            </div>
-        </div>
     </div>
 
-    <!-- Phone Box 4: Spotlight Player (matches desktop Box 4) -->
     <div class="phone-card">
         <div class="phone-label">
-            <div class="phone-label-num">4</div>
+            <div class="phone-label-num">3</div>
             Spotlight Player
             <span class="phone-hint" id="phoneSpotlightHint">type to search</span>
         </div>
@@ -664,19 +594,14 @@
             oninput="onPhonePlayerInput()"
             autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
         <button class="phone-clear" onclick="clearPhonePlayer()">✕ Clear — Show Top Killer</button>
-        <!-- Spotlight status indicator -->
-        <div style="display:flex;align-items:center;gap:8px;margin-top:10px;">
-            <div style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0;" id="phoneSpotlightDot"></div>
-            <div style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;" id="phoneSpotlightStatus">Auto mode — showing top infantry killer</div>
-        </div>
     </div>
 
-    <!-- Phone Box 5: Ticker Messages (matches desktop Box 5) -->
+    <!-- Phone: Ticker Messages -->
     <div class="phone-card" id="phone-msg-card">
         <div class="phone-label">
-            <div class="phone-label-num">5</div>
+            <div class="phone-label-num">4</div>
             Ticker Messages
-            <span class="phone-hint">saved on PC</span>
+            <span class="phone-hint">toggle &amp; frequency</span>
         </div>
         <div id="phone-msg-list"><div class="phone-no-msgs">No messages saved — add them on PC first</div></div>
     </div>
@@ -684,25 +609,21 @@
 
 <script>
     // Use the same host that served this page — works from PC (localhost) and phone (192.168.x.x)
-    const SERVER = `http://${window.location.hostname}:3000`;
+    const SERVER = `http://${window.location.hostname}:3001`;
 
     const VIEWS = [
-        { n: "Team Comparison",      f: "DO_NOT_EDIT_team_compare.html",         icon: "⚔️",  w: 3840, h: 2160 },
-        { n: "AT Leaderboard",       f: "DO_NOT_EDIT_at_leaderboard.html",       icon: "🚀",  w: 3840, h: 2160 },
-        { n: "Player Spotlight",     f: "DO_NOT_EDIT_player_spotlight.html",     icon: "🎯",  w: 1920, h: 1080 },
-        { n: "Top 5 Scroll Banner",  f: "DO_NOT_EDIT_top5_scroll_banner.html",   icon: "📊",  w: 1920, h: 60   },
-        { n: "Top 10 Scroll Banner", f: "DO_NOT_EDIT_top10_scroll_banner.html",  icon: "📋",  w: 1920, h: 60   },
-        { n: "Live Map",             f: "DO_NOT_EDIT_map_overlay.html",          icon: "🗺️",  w: 1920, h: 1080 },
-        { n: "Kill Streaks",         f: "DO_NOT_EDIT_killstreaks.html",          icon: "💀",  w: 1920, h: 1080 },
-        { n: "Kill Feed",            f: "DO_NOT_EDIT_killfeed.html",             icon: "🎯",  w: 1920, h: 1080 },
-        { n: "Tank Scoreboard",      f: "DO_NOT_EDIT_tank_scoreboard.html",      icon: "🛡️",  w: 1920, h: 1080 },
-        { n: "Melee Leaderboard",    f: "DO_NOT_EDIT_melee_leaderboard.html",    icon: "🔪",  w: 3840, h: 2160 },
-        { n: "Message Banner",       f: "DO_NOT_EDIT_message_banner.html",       icon: "💬",  w: 1920, h: 1080 },
+        { n: "Team Comparison",      f: "DO_NOT_EDIT_team_compare.html",        icon: "⚔️",  w: 3840, h: 2160 },
+        { n: "AT Leaderboard",       f: "DO_NOT_EDIT_at_leaderboard.html",      icon: "🚀",  w: 3840, h: 2160 },
+        { n: "Player Spotlight",     f: "DO_NOT_EDIT_player_spotlight.html",    icon: "🎯",  w: 1920, h: 1080 },
+        { n: "Top 5 Scroll Banner",  f: "DO_NOT_EDIT_top5_scroll_banner.html",  icon: "📊",  w: 1920, h: 60   },
+        { n: "Top 10 Scroll Banner", f: "DO_NOT_EDIT_top10_scroll_banner.html", icon: "📋",  w: 1920, h: 60   },
+        { n: "Live Map",             f: "DO_NOT_EDIT_map_overlay.html",         icon: "🗺️",  w: 1920, h: 1080 },
+        { n: "Kill Streaks",         f: "DO_NOT_EDIT_killstreaks.html",         icon: "💀",  w: 1920, h: 1080 },
+        { n: "Kill Feed",            f: "DO_NOT_EDIT_killfeed.html",            icon: "🎯",  w: 1920, h: 1080 },
+        { n: "Tank Scoreboard",      f: "DO_NOT_EDIT_tank_scoreboard.html",     icon: "🛡️",  w: 1920, h: 1080 },
+        { n: "Melee Leaderboard",    f: "DO_NOT_EDIT_melee_leaderboard.html",   icon: "🔪",  w: 3840, h: 2160 },
+        { n: "Message Banner",       f: "DO_NOT_EDIT_message_banner.html",      icon: "💬",  w: 1920, h: 1080 },
     ];
-
-    // Add isNew:true to any overlay added in this version to force it visible
-    // Remove the flag in the next release once users have seen it
-    const NEW_OVERLAYS = []; // e.g. ["DO_NOT_EDIT_message_banner.html"]
 
     let saveTimer = null;
     let currentSwap = false;
@@ -786,41 +707,14 @@
     }
 
     // ── SAVED SERVERS ──
-    // Stored in settings.json via server so they survive browser clears and work on any device
-    let _cachedServers = null;
-
+    // Stored in localStorage as an array of {name, url} objects
     function getSavedServers() {
-        return _cachedServers || [];
+        try { return JSON.parse(localStorage.getItem('hll_saved_servers') || '[]'); }
+        catch(e) { return []; }
     }
 
-    async function setSavedServers(servers) {
-        _cachedServers = servers;
-        // Also keep localStorage as fallback for fast reads
+    function setSavedServers(servers) {
         localStorage.setItem('hll_saved_servers', JSON.stringify(servers));
-        try {
-            await fetch(`${SERVER}/config`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ saved_servers: servers })
-            });
-        } catch(e) {}
-    }
-
-    async function loadSavedServers() {
-        try {
-            const r = await fetch(`${SERVER}/config`);
-            const cfg = await r.json();
-            if (cfg.saved_servers && Array.isArray(cfg.saved_servers)) {
-                _cachedServers = cfg.saved_servers;
-                // Migrate from localStorage if server has none but local has some
-            } else {
-                const local = JSON.parse(localStorage.getItem('hll_saved_servers') || '[]');
-                _cachedServers = local;
-                if (local.length > 0) await setSavedServers(local); // migrate to server
-            }
-        } catch(e) {
-            _cachedServers = JSON.parse(localStorage.getItem('hll_saved_servers') || '[]');
-        }
     }
 
     function renderServerDropdown(selectUrl) {
@@ -859,7 +753,7 @@
         document.getElementById('serverName').focus();
     }
 
-    async function confirmSaveServer() {
+    function confirmSaveServer() {
         const url  = document.getElementById('api').value.trim();
         const name = document.getElementById('serverName').value.trim();
         if (!name) { document.getElementById('serverName').focus(); return; }
@@ -867,7 +761,7 @@
         const existing = servers.findIndex(s => s.url === url);
         if (existing >= 0) { servers[existing].name = name; }
         else { servers.push({ name, url }); }
-        await setSavedServers(servers);
+        setSavedServers(servers);
         renderServerDropdown(url);
         cancelSaveServer();
         const hint = document.getElementById('apiHint');
@@ -880,14 +774,14 @@
         document.getElementById('serverName').value = '';
     }
 
-    async function deleteServer() {
+    function deleteServer() {
         const sel = document.getElementById('serverSelect');
         if (!sel.value && sel.value !== 0) return;
         const idx = parseInt(sel.value);
         const servers = getSavedServers();
         const name = servers[idx]?.name || 'server';
         servers.splice(idx, 1);
-        await setSavedServers(servers);
+        setSavedServers(servers);
         renderServerDropdown('');
         const hint = document.getElementById('apiHint');
         hint.textContent = `"${name}" removed`; hint.style.color = 'var(--text-mid)';
@@ -907,61 +801,69 @@
         saveConfig('swapHint');
     }
 
-    // Live player list from last API poll — used for dropdown suggestions
     let livePlayerList = [];
 
     function scoreMatch(playerName, query) {
         const pl = playerName.toLowerCase();
         const ql = query.toLowerCase().trim();
         if (!ql) return -1;
-        if (pl === ql) return 100;                                    // exact
-        if (pl.startsWith(ql)) return 90;                             // starts with
-        // word boundary — matches after space, pipe, underscore, dot, bracket
-        if (new RegExp('(^|[\s|_.\[\(])' + ql.replace(/[.*+?^${}()|[\]\]/g,'\$&')).test(pl)) return 80;
-        if (pl.includes(ql)) return 50;                               // contains
+        if (pl === ql) return 100;
+        if (pl.startsWith(ql)) return 90;
+        const sepIdx = pl.indexOf(ql);
+        if (sepIdx > 0 && ' |_.[('.includes(pl[sepIdx - 1])) return 80;
+        if (pl.includes(ql)) return 50;
         return -1;
     }
 
     function renderPlayerSuggestions(query) {
         const box = document.getElementById('playerSuggestions');
         if (!box) return;
-        if (!query.trim() || livePlayerList.length === 0) {
-            box.style.display = 'none'; return;
-        }
+        if (!query.trim() || livePlayerList.length === 0) { box.style.display = 'none'; return; }
         const scored = livePlayerList
-            .map(p => ({ p, score: scoreMatch(p.player, query) }))
-            .filter(x => x.score >= 0)
-            .sort((a, b) => b.score - a.score || b.p.kills - a.p.kills)
+            .map(function(p) { return { p: p, score: scoreMatch(p.player, query) }; })
+            .filter(function(x) { return x.score >= 0; })
+            .sort(function(a, b) { return b.score - a.score || b.p.kills - a.p.kills; })
             .slice(0, 6);
-
         if (!scored.length) { box.style.display = 'none'; return; }
-
-        box.innerHTML = scored.map((x, i) => {
+        box.innerHTML = scored.map(function(x, i) {
             const isBest = i === 0 && x.score >= 80;
-            return `<div class="player-suggestion${isBest ? ' best-match' : ''}" onclick="selectPlayerSuggestion('${x.p.player.replace(/'/g,"\'")}')">
-                <div class="player-suggestion-name">${x.p.player}</div>
-                <div class="player-suggestion-stats">K:${x.p.kills} · CBT:${x.p.combat}</div>
-                ${isBest ? '<div class="player-suggestion-badge">Best match</div>' : ''}
-            </div>`;
+            const safeName = x.p.player.replace(/&/g,'&amp;').replace(/"/g,'&quot;');
+            const border = isBest ? 'border-left:3px solid #ff9d00;' : '';
+            const badge  = isBest ? '<div style="font-size:8px;color:#ff9d00;font-family:monospace;">BEST MATCH</div>' : '';
+            return '<div onclick="selectPlayerSuggestion(this)" data-name="' + safeName + '" style="padding:10px 14px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);' + border + '">'
+                + '<div style="flex:1;color:white;font-weight:600;">' + x.p.player + '</div>'
+                + '<div style="font-family:monospace;font-size:10px;color:var(--text-dim);">K:' + x.p.kills + '</div>'
+                + badge + '</div>';
         }).join('');
         box.style.display = 'block';
     }
 
-    function selectPlayerSuggestion(name) {
+    function selectPlayerSuggestion(el) {
+        const name = el.getAttribute('data-name');
         document.getElementById('player').value = name;
         document.getElementById('playerSuggestions').style.display = 'none';
-        savePlayer('spotlightHint');
         updateSpotlightStatus(name);
+        savePlayer('spotlightHint');
     }
 
-    // Close dropdown when clicking outside
-    document.addEventListener('click', e => {
-        const drop = document.getElementById('playerDropdown');
-        if (drop && !drop.contains(e.target)) {
-            const box = document.getElementById('playerSuggestions');
-            if (box) box.style.display = 'none';
+    document.addEventListener('click', function(e) {
+        const box = document.getElementById('playerSuggestions');
+        const input = document.getElementById('player');
+        if (box && input && !box.contains(e.target) && e.target !== input) {
+            box.style.display = 'none';
         }
     });
+
+    function updateSpotlightStatus(name) {
+        const dot    = document.getElementById('spotlightDot');
+        const status = document.getElementById('spotlightStatus');
+        const isAuto = !name || !name.trim();
+        if (dot)    dot.style.background = isAuto ? 'var(--green)' : '#ff9d00';
+        if (status) {
+            status.textContent = isAuto ? 'Auto mode - showing top infantry killer' : 'Currently showing: ' + name.trim();
+            status.style.color = isAuto ? 'var(--text-dim)' : '#ff9d00';
+        }
+    }
 
     function onPlayerInput() {
         clearTimeout(saveTimer);
@@ -985,59 +887,20 @@
         }
     }
 
-    // OBS section collapse state
-    function isObsHidden() { return localStorage.getItem('hll_obs_hidden') === '1'; }
-
-    function toggleObsSection() {
-        const body   = document.getElementById('overlaysBody');
-        const label  = document.getElementById('overlaysToggleLabel');
-        // Never collapse if any new overlay is present
-        const hasNew = NEW_OVERLAYS.length > 0;
-        if (hasNew && isObsHidden()) return; // force open
-        if (isObsHidden()) {
-            localStorage.removeItem('hll_obs_hidden');
-            body.style.display = '';
-            label.textContent = 'HIDE ▲';
-        } else {
-            localStorage.setItem('hll_obs_hidden', '1');
-            body.style.display = 'none';
-            label.textContent = 'SHOW ▼';
-        }
-    }
-
-    function initObsSection() {
-        const body  = document.getElementById('overlaysBody');
-        const label = document.getElementById('overlaysToggleLabel');
-        // Force open if new overlays exist
-        if (NEW_OVERLAYS.length > 0) {
-            localStorage.removeItem('hll_obs_hidden');
-        }
-        if (isObsHidden()) {
-            body.style.display = 'none';
-            label.textContent = 'SHOW ▼';
-        } else {
-            body.style.display = '';
-            label.textContent = 'HIDE ▲';
-        }
-    }
-
     function renderLinks() {
-        document.getElementById('overlaysCount').textContent = VIEWS.length + ' OVERLAYS';
         document.getElementById('output').innerHTML = VIEWS.map(v => {
-            const url    = `${SERVER}/${v.f}`;
-            const isNew  = NEW_OVERLAYS.includes(v.f);
+            const url = `${SERVER}/${v.f}`;
             return `
-            <div class="link-card${isNew ? ' is-new' : ''}">
+            <div class="link-card">
                 <div class="card-icon">${v.icon}</div>
-                <div class="card-name">${v.n}${isNew ? '<span class="new-badge">NEW</span>' : ''}</div>
+                <div class="card-name">${v.n}</div>
                 <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
                     <div class="card-url" style="margin-bottom:0;flex:1">${url}</div>
-                    <div style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text-dim);letter-spacing:1px;white-space:nowrap;flex-shrink:0;">${v.w} × ${v.h}</div>
+                    <div style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text-dim);letter-spacing:1px;white-space:nowrap;">${v.w} x ${v.h}</div>
                 </div>
                 <button class="copy-btn" onclick="copyUrl(this, '${url}')">Copy OBS URL</button>
             </div>`;
         }).join('');
-        initObsSection();
     }
 
     function copyUrl(btn, url) {
@@ -1045,10 +908,6 @@
             btn.textContent = '✓ Copied!';
             btn.classList.add('copied');
             setTimeout(() => { btn.textContent = 'Copy OBS URL'; btn.classList.remove('copied'); }, 2000);
-            // Mark OBS step done in checklist
-            localStorage.setItem('hll_obs_copied', '1');
-            updateChecklist();
-    initMsgSection();
         });
     }
 
@@ -1123,25 +982,17 @@
             { v: 'every_30min', l: 'Every 30 min'  },
             { v: 'test_5sec',   l: '⚡ Test (5 sec)' },
         ];
-        el.innerHTML = msgs.map(m => {
-            const targetLabel = m.target === 'banner' ? '💬 Message Banner' : '📊 Scroll Banners';
-            const targetColor = m.target === 'banner' ? 'var(--text-mid)' : 'var(--text-dim)';
-            return `
+        el.innerHTML = msgs.map(m => `
             <div class="phone-msg-item ${m.active ? 'active' : ''}">
                 <div class="phone-msg-icon">${getPlatformSvg(m.platform)}</div>
-                <div style="flex:1;min-width:0;">
+                <div>
                     <div class="phone-msg-text">${m.text}</div>
-                    <div style="display:flex;align-items:center;gap:6px;margin-top:3px;flex-wrap:wrap;">
-                        <span style="font-family:'Share Tech Mono',monospace;font-size:8px;letter-spacing:1px;color:${targetColor};text-transform:uppercase;">${targetLabel}</span>
-                        <span style="color:var(--border-bright);font-size:8px;">·</span>
-                        <select class="phone-freq-select" style="flex:1;min-width:80px;" onchange="phoneSetFreq(${m.id}, this.value)">
-                            ${FREQ_OPTS.map(o => `<option value="${o.v}" ${m.freq === o.v ? 'selected' : ''}>${o.l}</option>`).join('')}
-                        </select>
-                    </div>
+                    <select class="phone-freq-select" onchange="phoneSetFreq(${m.id}, this.value)">
+                        ${FREQ_OPTS.map(o => `<option value="${o.v}" ${m.freq === o.v ? 'selected' : ''}>${o.l}</option>`).join('')}
+                    </select>
                 </div>
                 <div class="phone-msg-toggle ${m.active ? 'on' : ''}" onclick="phoneToggleMessage(${m.id})"></div>
-            </div>`;
-        }).join('');
+            </div>`).join('');
     }
 
     function phoneSetFaction(name) {
@@ -1200,20 +1051,6 @@
         }, 150);
     }
 
-    function updateSpotlightStatus(name) {
-        const dot        = document.getElementById('spotlightDot');
-        const status     = document.getElementById('spotlightStatus');
-        const phoneDot   = document.getElementById('phoneSpotlightDot');
-        const phoneStatus = document.getElementById('phoneSpotlightStatus');
-        const isAuto = !name || !name.trim();
-        const text = isAuto ? 'Auto mode — showing top infantry killer' : `Currently showing: ${name.trim()}`;
-        const color = isAuto ? 'var(--green)' : '#ff9d00';
-        if (dot) dot.style.background = color;
-        if (status) { status.textContent = text; status.style.color = isAuto ? 'var(--text-dim)' : '#ff9d00'; }
-        if (phoneDot) phoneDot.style.background = color;
-        if (phoneStatus) { phoneStatus.textContent = text; phoneStatus.style.color = isAuto ? 'var(--text-dim)' : '#ff9d00'; }
-    }
-
     async function clearPhonePlayer() {
         document.getElementById('phone-player').value = '';
         document.getElementById('player').value = '';
@@ -1250,15 +1087,14 @@
             const desktopInput = document.getElementById('player');
             if (document.activeElement !== desktopInput) {
                 desktopInput.value = data.player || '';
+                updateSpotlightStatus(data.player || '');
             }
-            updateSpotlightStatus(data.player || '');
-
-            // ── Update live player list for dropdown suggestions ──
-            if (cachedConfig.api_endpoint) {
+            // ── Update live player list for dropdown ──
+            if (data.api_endpoint) {
                 try {
-                    const pr = await fetch(cachedConfig.api_endpoint + (cachedConfig.api_endpoint.includes('?') ? '&' : '?') + 't=' + Date.now(), { cache: 'no-store', headers: { 'User-Agent': 'Mozilla/5.0' } });
+                    const pr = await fetch(data.api_endpoint + (data.api_endpoint.includes('?') ? '&' : '?') + 't=' + Date.now(), { cache: 'no-store', headers: { 'User-Agent': 'Mozilla/5.0' } });
                     const pd = await pr.json();
-                    if (pd?.result?.stats) livePlayerList = pd.result.stats;
+                    if (pd && pd.result && pd.result.stats) livePlayerList = pd.result.stats;
                 } catch(e) {}
             }
 
@@ -1316,102 +1152,6 @@
     // Sync all UI every 2 seconds on every device
     syncAllUI();
     setInterval(syncAllUI, 2000);
-    setInterval(updateChecklist, 2000);
-    updateChecklist();
-
-    // ── TICKER MESSAGES SECTION TOGGLE ───────────────────────
-    function isMsgHidden() { return localStorage.getItem('hll_msg_hidden') === '1'; }
-
-    function toggleMsgSection() {
-        const body  = document.getElementById('msgSectionBody');
-        const label = document.getElementById('msgToggleLabel');
-        if (isMsgHidden()) {
-            localStorage.removeItem('hll_msg_hidden');
-            body.style.display = '';
-            label.textContent = 'HIDE ▲';
-        } else {
-            localStorage.setItem('hll_msg_hidden', '1');
-            body.style.display = 'none';
-            label.textContent = 'SHOW ▼';
-        }
-    }
-
-    function initMsgSection() {
-        const body  = document.getElementById('msgSectionBody');
-        const label = document.getElementById('msgToggleLabel');
-        if (!body || !label) return;
-        if (isMsgHidden()) {
-            body.style.display = 'none';
-            label.textContent = 'SHOW ▼';
-        } else {
-            body.style.display = '';
-            label.textContent = 'HIDE ▲';
-        }
-    }
-
-    // ── FIRST TIME CHECKLIST ──────────────────────────────────
-    function updateChecklist() {
-        const el = document.getElementById('setupChecklist');
-        if (!el) return;
-        if (localStorage.getItem('hll_checklist_dismissed') === '1') {
-            el.style.display = 'none'; return;
-        }
-        // Check API set
-        const apiSet = !!(document.getElementById('api')?.value?.trim());
-        const obsUsed = localStorage.getItem('hll_obs_copied') === '1';
-
-        const chkApi = document.getElementById('chk-api');
-        const chkObs = document.getElementById('chk-obs');
-        if (chkApi) chkApi.className = 'checklist-item' + (apiSet   ? ' done' : '');
-        if (chkObs) chkObs.className = 'checklist-item' + (obsUsed  ? ' done' : '');
-
-        // Hide checklist once all done
-        if (apiSet && obsUsed) {
-            setTimeout(() => {
-                if (el) { el.style.opacity = '0'; el.style.transition = 'opacity 0.5s'; }
-                setTimeout(() => { if (el) el.style.display = 'none'; }, 500);
-            }, 1500);
-        }
-    }
-
-    function dismissChecklist() {
-        localStorage.setItem('hll_checklist_dismissed', '1');
-        const el = document.getElementById('setupChecklist');
-        if (el) { el.style.opacity = '0'; el.style.transition = 'opacity 0.3s'; setTimeout(() => el.style.display='none', 300); }
-    }
-
-    // Mark OBS as used when any URL is copied
-    const _origCopyUrl = copyUrl;
-
-    // ── VIDEO BANNER ──────────────────────────────────────────
-    const VIDEO_URL = ''; // ← Paste your YouTube URL here when ready
-
-    function initVideoBanner() {
-        const banner = document.getElementById('videoBanner');
-        const link   = document.getElementById('videoLink');
-        if (!banner) return;
-        // Hide if dismissed or no URL set
-        const dismissed = localStorage.getItem('hll_video_dismissed') === '1';
-        if (dismissed || !VIDEO_URL) {
-            banner.style.display = 'none';
-            return;
-        }
-        link.href = VIDEO_URL;
-    }
-
-    function dismissVideoBanner() {
-        localStorage.setItem('hll_video_dismissed', '1');
-        const banner = document.getElementById('videoBanner');
-        banner.style.transition = 'opacity 0.3s, max-height 0.4s';
-        banner.style.opacity = '0';
-        banner.style.maxHeight = '0';
-        banner.style.padding = '0';
-        banner.style.margin = '0';
-        banner.style.overflow = 'hidden';
-        setTimeout(() => banner.style.display = 'none', 400);
-    }
-
-    initVideoBanner();
     // ── TICKER MESSAGES ──────────────────────────────────────────────────
     let selectedPlatform = { platform: 'general', icon: 'general' };
     let selectedFreq   = 'every_loop';
