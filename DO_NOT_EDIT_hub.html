@@ -894,13 +894,7 @@
         }).join('');
     }
 
-    function copyUrl(btn, url) {
-        navigator.clipboard.writeText(url).then(() => {
-            btn.textContent = '✓ Copied!';
-            btn.classList.add('copied');
-            setTimeout(() => { btn.textContent = 'Copy OBS URL'; btn.classList.remove('copied'); }, 2000);
-        });
-    }
+
 
     // ── Load saved config from server on startup ──
     async function loadConfig() {
