@@ -279,7 +279,7 @@
     <div class="header">
         <div class="header-eyebrow">Hell Let Loose · Overlay System</div>
         <h1>HLL <span>COMMAND</span> HUB</h1>
-        <div class="header-sub">Local Server · v3.0</div>
+        <div class="header-sub">Local Server · V2.0</div>
         <div class="header-line"></div>
     </div>
 
@@ -319,6 +319,16 @@
             <button type="button" class="server-btn green" onclick="confirmSaveServer()">✓ Confirm</button>
             <button type="button" class="server-btn" onclick="cancelSaveServer()">✕</button>
         </div>
+    </div>
+
+    <div class="section">
+        <div class="overlays-header">
+            <div class="section-num" style="background:var(--red);width:28px;height:28px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:white;flex-shrink:0;">2</div>
+            <div class="overlays-title">OBS Browser Sources</div>
+            <div class="overlays-line"></div>
+            <div class="overlays-count">11 OVERLAYS</div>
+        </div>
+        <div class="link-grid" id="output"></div>
     </div>
 
     <!-- 2: TEAM SWAP -->
@@ -487,14 +497,6 @@
         </div>
     </div>
 
-    <div class="section">
-        <div class="overlays-header">
-            <div class="overlays-title">OBS Browser Sources</div>
-            <div class="overlays-line"></div>
-            <div class="overlays-count">11 OVERLAYS</div>
-        </div>
-        <div class="link-grid" id="output"></div>
-    </div>
 
     <div class="footer">HLL Command Hub · All config syncs instantly via local server</div>
 </div>
@@ -585,17 +587,17 @@
     const SERVER = `http://${window.location.hostname}:3001`;
 
     const VIEWS = [
-        { n: "Team Comparison",   f: "DO_NOT_EDIT_team_compare.html",              icon: "⚔️"  },
-        { n: "AT Leaderboard",    f: "DO_NOT_EDIT_at_leaderboard.html",          icon: "🚀"  },
-        { n: "Player Spotlight",  f: "DO_NOT_EDIT_player_spotlight.html",          icon: "🎯"  },
-        { n: "Top 5 Scroll Banner",  f: "DO_NOT_EDIT_top5_scroll_banner.html",  icon: "📊"  },
-        { n: "Top 10 Scroll Banner", f: "DO_NOT_EDIT_top10_scroll_banner.html", icon: "📋"  },
-        { n: "Live Map",          f: "DO_NOT_EDIT_map_overlay.html", icon: "🗺️" },
-        { n: "Kill Streaks",      f: "DO_NOT_EDIT_killstreaks.html",               icon: "💀"  },
-        { n: "Kill Feed",          f: "DO_NOT_EDIT_killfeed.html",                  icon: "🎯"  },
-        { n: "Tank Scoreboard",    f: "DO_NOT_EDIT_tank_scoreboard.html",            icon: "🛡️"  },
-        { n: "Melee Leaderboard",  f: "DO_NOT_EDIT_melee_leaderboard.html",          icon: "🔪"  },
-        { n: "Message Banner",     f: "DO_NOT_EDIT_message_banner.html",             icon: "💬"  }
+        { n: "Team Comparison",      f: "DO_NOT_EDIT_team_compare.html",        icon: "⚔️",  w: 3840, h: 2160 },
+        { n: "AT Leaderboard",       f: "DO_NOT_EDIT_at_leaderboard.html",      icon: "🚀",  w: 3840, h: 2160 },
+        { n: "Player Spotlight",     f: "DO_NOT_EDIT_player_spotlight.html",    icon: "🎯",  w: 1920, h: 1080 },
+        { n: "Top 5 Scroll Banner",  f: "DO_NOT_EDIT_top5_scroll_banner.html",  icon: "📊",  w: 1920, h: 60   },
+        { n: "Top 10 Scroll Banner", f: "DO_NOT_EDIT_top10_scroll_banner.html", icon: "📋",  w: 1920, h: 60   },
+        { n: "Live Map",             f: "DO_NOT_EDIT_map_overlay.html",         icon: "🗺️",  w: 1920, h: 1080 },
+        { n: "Kill Streaks",         f: "DO_NOT_EDIT_killstreaks.html",         icon: "💀",  w: 1920, h: 1080 },
+        { n: "Kill Feed",            f: "DO_NOT_EDIT_killfeed.html",            icon: "🎯",  w: 1920, h: 1080 },
+        { n: "Tank Scoreboard",      f: "DO_NOT_EDIT_tank_scoreboard.html",     icon: "🛡️",  w: 1920, h: 1080 },
+        { n: "Melee Leaderboard",    f: "DO_NOT_EDIT_melee_leaderboard.html",   icon: "🔪",  w: 3840, h: 2160 },
+        { n: "Message Banner",       f: "DO_NOT_EDIT_message_banner.html",      icon: "💬",  w: 1920, h: 1080 },
     ];
 
     let saveTimer = null;
@@ -801,7 +803,10 @@
             <div class="link-card">
                 <div class="card-icon">${v.icon}</div>
                 <div class="card-name">${v.n}</div>
-                <div class="card-url">${url}</div>
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                    <div class="card-url" style="margin-bottom:0;flex:1">${url}</div>
+                    <div style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text-dim);letter-spacing:1px;white-space:nowrap;">${v.w} x ${v.h}</div>
+                </div>
                 <button class="copy-btn" onclick="copyUrl(this, '${url}')">Copy OBS URL</button>
             </div>`;
         }).join('');
