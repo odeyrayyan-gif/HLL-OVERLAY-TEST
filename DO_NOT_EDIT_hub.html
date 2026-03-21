@@ -238,10 +238,6 @@
 
         /* ── PHONE MODE ── */
         .phone-mode { display: none; background: var(--bg); min-height: 100vh; }
-        @media (max-width: 600px) {
-            .shell { display: none !important; }
-            .phone-mode { display: flex !important; }
-        }
         body.is-phone .shell { display: none !important; }
         body.is-phone .phone-mode {
             display: flex !important;
@@ -1024,11 +1020,16 @@
 
     // ── PHONE / DESKTOP MODE DETECTION ──
     function applyLayout() {
-        const isPhone = window.innerWidth <= 600;
+        const w = window.innerWidth || document.documentElement.clientWidth || screen.width;
+        const isPhone = w <= 700;
         document.body.classList.toggle('is-phone', isPhone);
     }
+    // Run immediately and on any layout change
     applyLayout();
     window.addEventListener('resize', applyLayout);
+    window.addEventListener('orientationchange', applyLayout);
+    // Run again after load to catch Safari quirks
+    window.addEventListener('load', applyLayout);
 
     // ── PHONE MODE JS ──
     let phoneTimer = null;
