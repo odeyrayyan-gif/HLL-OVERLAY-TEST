@@ -137,6 +137,24 @@ class HLLHandler(SimpleHTTPRequestHandler):
             name = self.read_player()
             self.send_json({"player": name})
             return
+        # ── /players — proxy live player list from CRCON to avoid CORS ──
+        if path == "/players":
+            try:
+                cfg = self.read_config()
+                endpoint = cfg.get("api_endpoint", "")
+                if not endpoint:
+                    self.send_json({"players": []})
+                    return
+                sep = "&" if "?" in endpoint else "?"
+                url = endpoint + sep + "t=" + str(os.times()[4])
+                req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+                with urllib.request.urlopen(req, timeout=5) as r:
+                    data = json.loads(r.read().decode())
+                stats = data.get("result", {}).get("stats", [])
+                self.send_json({"players": stats})
+            except Exception as e:
+                self.send_json({"players": []})
+            return
         # ── Serve static files normally ──
         super().do_GET()
 
