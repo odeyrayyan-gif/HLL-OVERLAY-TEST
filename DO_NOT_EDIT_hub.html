@@ -32,16 +32,6 @@
             z-index: 10;
         }
         .shell { position: relative; z-index: 1; width: 100%; max-width: 860px; }
-        .video-banner { display:flex; align-items:center; gap:14px; background:rgba(172,46,46,0.08); border:1px solid rgba(172,46,46,0.3); border-radius:10px; padding:14px 18px; margin-bottom:20px; transition:all 0.3s; }
-        .video-banner:hover { border-color:rgba(172,46,46,0.6); }
-        .video-icon { font-size:22px; flex-shrink:0; }
-        .video-text { flex:1; }
-        .video-text-title { font-size:13px; font-weight:600; color:#fff; letter-spacing:1px; margin-bottom:3px; }
-        .video-text-sub { font-family:'Share Tech Mono',monospace; font-size:10px; color:var(--text-mid); letter-spacing:1px; }
-        .video-link { display:inline-flex; align-items:center; gap:6px; background:var(--red); color:white; border:none; padding:8px 16px; border-radius:6px; font-family:'Oswald',sans-serif; font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; cursor:pointer; text-decoration:none; transition:all 0.2s; flex-shrink:0; }
-        .video-link:hover { background:var(--red-hot); }
-        .video-dismiss { background:transparent; border:1px solid var(--border); color:var(--text-dim); width:26px; height:26px; border-radius:4px; cursor:pointer; font-size:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all 0.2s; }
-        .video-dismiss:hover { border-color:var(--border-bright); color:var(--text-mid); }
 
         .header { text-align: center; margin-bottom: 36px; }
         .header-eyebrow { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--red); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 10px; opacity: 0.8; }
@@ -82,9 +72,7 @@
         .pill-right { color: var(--red); }
         .pill-div { color: var(--text-dim); margin: 0 6px; }
 
-        .overlays-header { display: flex; align-items: center; gap: 12px; margin-bottom: 0; cursor:pointer; user-select:none; }
-        .overlays-body { margin-top: 18px; }
-        .overlays-toggle { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--text-dim); letter-spacing: 1px; flex-shrink: 0; }
+        .overlays-header { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
         .overlays-title { font-size: 15px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: #fff; }
         .overlays-line { flex: 1; height: 1px; background: var(--border); }
         .overlays-count { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--text-dim); }
@@ -291,18 +279,8 @@
     <div class="header">
         <div class="header-eyebrow">Hell Let Loose · Overlay System</div>
         <h1>HLL <span>COMMAND</span> HUB</h1>
-        <div class="header-sub">Local Server · V2.0</div>
+        <div class="header-sub">Local Server · v3.0</div>
         <div class="header-line"></div>
-    </div>
-
-    <div class="video-banner" id="videoBanner">
-        <div class="video-icon">🎬</div>
-        <div class="video-text">
-            <div class="video-text-title">Watch the instructional video</div>
-            <div class="video-text-sub">OBS setup · API config · all overlays explained</div>
-        </div>
-        <a class="video-link" id="videoLink" href="#" target="_blank">▶ WATCH INSTRUCTIONAL VIDEO</a>
-        <button type="button" class="video-dismiss" onclick="dismissVideoBanner()" title="Hide this">✕</button>
     </div>
 
     <div class="status-bar" id="statusBar">
@@ -343,29 +321,14 @@
         </div>
     </div>
 
-
-    <div class="section">
-        <div class="overlays-header" onclick="toggleObsSection()" style="cursor:pointer;user-select:none;">
-            <div class="section-num">2</div>
-            <div class="overlays-title">OBS Browser Sources</div>
-            <div class="overlays-line"></div>
-            <div class="overlays-count" id="overlaysCount">11 OVERLAYS</div>
-            <div class="overlays-toggle" id="obsToggleLabel">HIDE ▲</div>
-        </div>
-        <div class="overlays-body" id="overlaysBody">
-            <div class="link-grid" id="output"></div>
-        </div>
-    </div>
-
-    <!-- 3: TEAM SETUP (alignment + faction combined) -->
+    <!-- 2: TEAM SWAP -->
     <div class="section">
         <div class="section-header">
-            <div class="section-num">3</div>
-            <div class="section-title">Team Setup</div>
-            <div class="section-hint" id="swapHint">Changes every match</div>
+            <div class="section-num">2</div>
+            <div class="section-title">Team Side Alignment</div>
+            <div class="section-hint" id="swapHint">Blue = left · Red = right · always</div>
         </div>
-        <label class="input-label">Side Alignment — <span style="color:var(--text-dim)">Blue = left · Red = right · always</span></label>
-        <div class="toggle-group" style="margin-bottom:18px">
+        <div class="toggle-group">
             <div class="toggle-pill selected-allies" id="pill-standard" onclick="setSwap(false)">
                 <div class="pill-label">Standard</div>
                 <div class="pill-teams">
@@ -383,7 +346,15 @@
                 </div>
             </div>
         </div>
-        <label class="input-label">Allied Faction — <span id="factionHint" style="color:var(--text-dim)">Replaces labels in all overlays</span></label>
+    </div>
+
+    <!-- 3: FACTION SELECTOR -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-num">3</div>
+            <div class="section-title">Faction Selection</div>
+            <div class="section-hint" id="factionHint">Replaces labels in all overlays</div>
+        </div>
         <div class="faction-group">
             <!-- Allies side -->
             <div class="faction-pill selected-allied" id="faction-us" onclick="setFaction('US ARMY')">
@@ -421,24 +392,18 @@
         </div>
         <div style="position:relative;">
             <input type="text" id="player" placeholder="Type part of a player name..." oninput="onPlayerInput()" autocomplete="off">
-            <div id="playerSuggestions" style="display:none;position:absolute;top:100%;left:0;right:0;z-index:100;background:var(--surface);border:1px solid var(--border-bright);border-radius:6px;margin-top:4px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.4);"></div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-top:8px;">
-            <div style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0;" id="spotlightDot"></div>
-            <div style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;" id="spotlightStatus">Auto mode - showing top infantry killer</div>
+            <div id="playerSuggestions" style="display:none;position:absolute;top:100%;left:0;right:0;z-index:100;background:#0d1117;border:1px solid #2e3a48;border-radius:6px;margin-top:4px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.4);"></div>
         </div>
     </div>
 
     <!-- OBS LINKS -->
     <!-- 5: TICKER MESSAGES -->
     <div class="section">
-        <div class="section-header" onclick="toggleMsgSection()" style="cursor:pointer;user-select:none;">
+        <div class="section-header">
             <div class="section-num">5</div>
             <div class="section-title">Ticker Messages</div>
             <div class="section-hint" id="msgHint">Injected into Top 5 &amp; Top 10 scroll banners</div>
-            <div class="overlays-toggle" id="msgToggleLabel" style="margin-left:8px;flex-shrink:0;">HIDE ▲</div>
         </div>
-        <div id="msgSectionBody">
 
         <!-- Platform picker -->
         <label class="input-label">Platform Icon — <span>choose what appears next to your message</span></label>
@@ -525,6 +490,14 @@
         </div>
     </div>
 
+    <div class="section">
+        <div class="overlays-header">
+            <div class="overlays-title">OBS Browser Sources</div>
+            <div class="overlays-line"></div>
+            <div class="overlays-count">11 OVERLAYS</div>
+        </div>
+        <div class="link-grid" id="output"></div>
+    </div>
 
     <div class="footer">HLL Command Hub · All config syncs instantly via local server</div>
 </div>
@@ -615,17 +588,17 @@
     const SERVER = `http://${window.location.hostname}:3001`;
 
     const VIEWS = [
-        { n: "Team Comparison",      f: "DO_NOT_EDIT_team_compare.html",        icon: "⚔️",  w: 3840, h: 2160 },
-        { n: "AT Leaderboard",       f: "DO_NOT_EDIT_at_leaderboard.html",      icon: "🚀",  w: 3840, h: 2160 },
-        { n: "Player Spotlight",     f: "DO_NOT_EDIT_player_spotlight.html",    icon: "🎯",  w: 1920, h: 1080 },
-        { n: "Top 5 Scroll Banner",  f: "DO_NOT_EDIT_top5_scroll_banner.html",  icon: "📊",  w: 1920, h: 60   },
-        { n: "Top 10 Scroll Banner", f: "DO_NOT_EDIT_top10_scroll_banner.html", icon: "📋",  w: 1920, h: 60   },
-        { n: "Live Map",             f: "DO_NOT_EDIT_map_overlay.html",         icon: "🗺️",  w: 1920, h: 1080 },
-        { n: "Kill Streaks",         f: "DO_NOT_EDIT_killstreaks.html",         icon: "💀",  w: 1920, h: 1080 },
-        { n: "Kill Feed",            f: "DO_NOT_EDIT_killfeed.html",            icon: "🎯",  w: 1920, h: 1080 },
-        { n: "Tank Scoreboard",      f: "DO_NOT_EDIT_tank_scoreboard.html",     icon: "🛡️",  w: 1920, h: 1080 },
-        { n: "Melee Leaderboard",    f: "DO_NOT_EDIT_melee_leaderboard.html",   icon: "🔪",  w: 3840, h: 2160 },
-        { n: "Message Banner",       f: "DO_NOT_EDIT_message_banner.html",      icon: "💬",  w: 1920, h: 1080 },
+        { n: "Team Comparison",   f: "DO_NOT_EDIT_team_compare.html",              icon: "⚔️"  },
+        { n: "AT Leaderboard",    f: "DO_NOT_EDIT_at_leaderboard.html",          icon: "🚀"  },
+        { n: "Player Spotlight",  f: "DO_NOT_EDIT_player_spotlight.html",          icon: "🎯"  },
+        { n: "Top 5 Scroll Banner",  f: "DO_NOT_EDIT_top5_scroll_banner.html",  icon: "📊"  },
+        { n: "Top 10 Scroll Banner", f: "DO_NOT_EDIT_top10_scroll_banner.html", icon: "📋"  },
+        { n: "Live Map",          f: "DO_NOT_EDIT_map_overlay.html", icon: "🗺️" },
+        { n: "Kill Streaks",      f: "DO_NOT_EDIT_killstreaks.html",               icon: "💀"  },
+        { n: "Kill Feed",          f: "DO_NOT_EDIT_killfeed.html",                  icon: "🎯"  },
+        { n: "Tank Scoreboard",    f: "DO_NOT_EDIT_tank_scoreboard.html",            icon: "🛡️"  },
+        { n: "Melee Leaderboard",  f: "DO_NOT_EDIT_melee_leaderboard.html",          icon: "🔪"  },
+        { n: "Message Banner",     f: "DO_NOT_EDIT_message_banner.html",             icon: "💬"  }
     ];
 
     let saveTimer = null;
@@ -635,7 +608,7 @@
     async function saveConfig(hintId) {
         const hint = document.getElementById(hintId);
         hint.textContent = 'SAVING...';
-        hint.style.color = '#718096';
+        hint.style.color = 'var(--text-mid)';
         try {
             const res = await fetch(`${SERVER}/config`, {
                 method: 'POST',
@@ -648,8 +621,8 @@
             const json = await res.json();
             if (!json.ok) throw new Error();
             hint.textContent = '✓ SAVED';
-            hint.style.color = '#00ff88';
-            setTimeout(() => { hint.textContent = 'Saved instantly to all overlays'; hint.style.color = '#718096'; }, 2000);
+            hint.style.color = 'var(--green)';
+            setTimeout(() => { hint.textContent = 'Saved instantly to all overlays'; hint.style.color = ''; }, 2000);
         } catch(e) {
             hint.textContent = 'SAVE FAILED — is DO_NOT_EDIT_server.py running?';
             hint.style.color = '#ff3c3c';
@@ -660,7 +633,7 @@
     async function savePlayer(hintId) {
         const hint = document.getElementById(hintId);
         hint.textContent = 'SAVING...';
-        hint.style.color = '#718096';
+        hint.style.color = 'var(--text-mid)';
         try {
             const res = await fetch(`${SERVER}/player`, {
                 method: 'POST',
@@ -670,8 +643,8 @@
             const json = await res.json();
             if (!json.ok) throw new Error();
             hint.textContent = '✓ SAVED';
-            hint.style.color = '#00ff88';
-            setTimeout(() => { hint.textContent = 'Updates overlay within 3 seconds'; hint.style.color = '#718096'; }, 2000);
+            hint.style.color = 'var(--green)';
+            setTimeout(() => { hint.textContent = 'Updates overlay within 3 seconds'; hint.style.color = ''; }, 2000);
         } catch(e) {
             hint.textContent = 'SAVE FAILED — is DO_NOT_EDIT_server.py running?';
             hint.style.color = '#ff3c3c';
@@ -686,15 +659,15 @@
         currentFaction = name;
         updateFactionPills(name);
         const hint = document.getElementById('factionHint');
-        hint.textContent = 'saving...'; hint.style.color = '#718096';
+        hint.textContent = 'saving...'; hint.style.color = 'var(--text-mid)';
         fetch(`${SERVER}/config`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ allied_faction: name })
         }).then(() => {
             hint.textContent = '✓ saved — overlays updated';
-            hint.style.color = '#00ff88';
-            setTimeout(() => { hint.textContent = 'Replaces labels in all overlays'; hint.style.color = '#718096'; }, 2000);
+            hint.style.color = 'var(--green)';
+            setTimeout(() => { hint.textContent = 'Replaces labels in all overlays'; hint.style.color = ''; }, 2000);
         }).catch(() => {
             hint.textContent = 'SAVE FAILED';
             hint.style.color = '#ff3c3c';
@@ -748,7 +721,7 @@
         if (!url) {
             const hint = document.getElementById('apiHint');
             hint.textContent = 'Paste a URL first'; hint.style.color = '#ff3c3c';
-            setTimeout(() => { hint.textContent = 'Saved instantly to all overlays'; hint.style.color = '#718096'; }, 2000);
+            setTimeout(() => { hint.textContent = 'Saved instantly to all overlays'; hint.style.color = ''; }, 2000);
             return;
         }
         document.getElementById('serverName').value = '';
@@ -768,8 +741,8 @@
         renderServerDropdown(url);
         cancelSaveServer();
         const hint = document.getElementById('apiHint');
-        hint.textContent = `✓ Saved as "${name}"`; hint.style.color = '#00ff88';
-        setTimeout(() => { hint.textContent = 'Saved instantly to all overlays'; hint.style.color = '#718096'; }, 2500);
+        hint.textContent = `✓ Saved as "${name}"`; hint.style.color = 'var(--green)';
+        setTimeout(() => { hint.textContent = 'Saved instantly to all overlays'; hint.style.color = ''; }, 2500);
     }
 
     function cancelSaveServer() {
@@ -787,8 +760,8 @@
         setSavedServers(servers);
         renderServerDropdown('');
         const hint = document.getElementById('apiHint');
-        hint.textContent = `"${name}" removed`; hint.style.color = '#718096';
-        setTimeout(() => { hint.textContent = 'Saved instantly to all overlays'; hint.style.color = '#718096'; }, 2000);
+        hint.textContent = `"${name}" removed`; hint.style.color = 'var(--text-mid)';
+        setTimeout(() => { hint.textContent = 'Saved instantly to all overlays'; hint.style.color = ''; }, 2000);
     }
 
     function onApiInput() {
@@ -804,78 +777,62 @@
         saveConfig('swapHint');
     }
 
-    let livePlayerList = [];
+    var livePlayerList = [];
 
     function scoreMatch(playerName, query) {
-        const pl = playerName.toLowerCase();
-        const ql = query.toLowerCase().trim();
+        var pl = playerName.toLowerCase();
+        var ql = query.toLowerCase().trim();
         if (!ql) return -1;
         if (pl === ql) return 100;
         if (pl.startsWith(ql)) return 90;
-        const sepIdx = pl.indexOf(ql);
-        if (sepIdx > 0 && ' |_.[('.includes(pl[sepIdx - 1])) return 80;
+        var sepIdx = pl.indexOf(ql);
+        if (sepIdx > 0 && ' |_.[('.indexOf(pl[sepIdx - 1]) >= 0) return 80;
         if (pl.includes(ql)) return 50;
         return -1;
     }
 
     function renderPlayerSuggestions(query) {
-        const box = document.getElementById('playerSuggestions');
+        var box = document.getElementById('playerSuggestions');
         if (!box) return;
-        if (!query.trim() || livePlayerList.length === 0) { box.style.display = 'none'; return; }
-        const scored = livePlayerList
-            .map(function(p) { return { p: p, score: scoreMatch(p.player, query) }; })
-            .filter(function(x) { return x.score >= 0; })
-            .sort(function(a, b) { return b.score - a.score || b.p.kills - a.p.kills; })
-            .slice(0, 6);
+        if (!query || !query.trim() || livePlayerList.length === 0) {
+            box.style.display = 'none';
+            return;
+        }
+        var scored = [];
+        for (var i = 0; i < livePlayerList.length; i++) {
+            var s = scoreMatch(livePlayerList[i].player, query);
+            if (s >= 0) scored.push({ p: livePlayerList[i], score: s });
+        }
+        scored.sort(function(a, b) { return b.score - a.score || b.p.kills - a.p.kills; });
+        scored = scored.slice(0, 6);
         if (!scored.length) { box.style.display = 'none'; return; }
-        box.innerHTML = scored.map(function(x, i) {
-            const isBest = i === 0 && x.score >= 80;
-            const safeName = x.p.player.replace(/&/g,'&amp;').replace(/"/g,'&quot;');
-            const border = isBest ? 'border-left:3px solid #ff9d00;' : '';
-            const badge = isBest ? '<div style="font-size:8px;color:#ff9d00;font-family:monospace;">BEST MATCH</div>' : '';
-            return '<div onclick="selectPlayerSuggestion(this)" data-name="' + safeName + '" style="padding:10px 14px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);' + border + '">'
-                + '<div style="flex:1;color:white;font-weight:600;">' + x.p.player + '</div>'
-                + '<div style="font-family:monospace;font-size:10px;color:var(--text-dim);">K:' + x.p.kills + '</div>'
-                + badge + '</div>';
-        }).join('');
+        var html = '';
+        for (var j = 0; j < scored.length; j++) {
+            var name = scored[j].p.player.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+            var isBest = j === 0 && scored[j].score >= 80;
+            html += '<div onclick="selectPlayerSuggestion(this)" data-name="' + name + '" style="padding:10px 14px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:10px;border-bottom:1px solid #1e2530;' + (isBest ? 'border-left:3px solid #ff9d00;' : '') + '">'
+                  + '<div style="flex:1;color:white;font-weight:600;">' + scored[j].p.player + '</div>'
+                  + '<div style="font-size:10px;color:#4a5568;">K:' + scored[j].p.kills + '</div>'
+                  + (isBest ? '<div style="font-size:8px;color:#ff9d00;">BEST</div>' : '')
+                  + '</div>';
+        }
+        box.innerHTML = html;
         box.style.display = 'block';
     }
 
     function selectPlayerSuggestion(el) {
-        const name = el.getAttribute('data-name');
+        var name = el.getAttribute('data-name');
         document.getElementById('player').value = name;
-        document.getElementById('playerSuggestions').style.display = 'none';
-        updateSpotlightStatus(name);
+        var box = document.getElementById('playerSuggestions');
+        if (box) box.style.display = 'none';
         savePlayer('spotlightHint');
-    }
-
-    // Close dropdown when clicking outside - deferred to avoid Safari load issues
-    window.addEventListener('load', function() {
-        document.addEventListener('click', function(e) {
-            var box = document.getElementById('playerSuggestions');
-            var input = document.getElementById('player');
-            if (box && input && !box.contains(e.target) && e.target !== input) {
-                box.style.display = 'none';
-            }
-        });
-    });
-
-    function updateSpotlightStatus(name) {
-        const isAuto = !name || !name.trim();
-        const text = isAuto ? 'Auto mode - showing top infantry killer' : 'Currently showing: ' + name.trim();
-        const color = isAuto ? '#4a5568' : '#ff9d00';
-        const bgColor = isAuto ? '#00ff88' : '#ff9d00';
-        const dot = document.getElementById('spotlightDot');
-        const status = document.getElementById('spotlightStatus');
-        if (dot) dot.style.background = bgColor;
-        if (status) { status.textContent = text; status.style.color = color; }
     }
 
     function onPlayerInput() {
         clearTimeout(saveTimer);
-        const query = document.getElementById('player').value;
+        var query = document.getElementById('player').value;
         renderPlayerSuggestions(query);
-        saveTimer = setTimeout(() => savePlayer('spotlightHint'), 400);
+        saveTimer = setTimeout(function() { savePlayer('spotlightHint'); }, 400);
     }
 
     function updateStatus(apiVal) {
@@ -900,10 +857,7 @@
             <div class="link-card">
                 <div class="card-icon">${v.icon}</div>
                 <div class="card-name">${v.n}</div>
-                <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-                    <div class="card-url" style="margin-bottom:0;flex:1">${url}</div>
-                    <div style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text-dim);letter-spacing:1px;white-space:nowrap;">${v.w} x ${v.h}</div>
-                </div>
+                <div class="card-url">${url}</div>
                 <button class="copy-btn" onclick="copyUrl(this, '${url}')">Copy OBS URL</button>
             </div>`;
         }).join('');
@@ -937,72 +891,9 @@
         renderLinks();
     }
 
-    const VIDEO_URL = '';
-    function initVideoBanner() {
-        const banner = document.getElementById('videoBanner');
-        const link = document.getElementById('videoLink');
-        if (!banner) return;
-        if (localStorage.getItem('hll_video_dismissed') === '1' || !VIDEO_URL) {
-            banner.style.display = 'none'; return;
-        }
-        link.href = VIDEO_URL;
-    }
-    function dismissVideoBanner() {
-        localStorage.setItem('hll_video_dismissed', '1');
-        const banner = document.getElementById('videoBanner');
-        if (banner) banner.style.display = 'none';
-    }
-    initVideoBanner();
-
-    function toggleObsSection() {
-        var body = document.getElementById('overlaysBody');
-        var label = document.getElementById('obsToggleLabel');
-        if (!body || !label) return;
-        if (body.style.display === 'none') {
-            body.style.display = '';
-            label.textContent = 'HIDE ▲';
-            localStorage.removeItem('hll_obs_hidden');
-        } else {
-            body.style.display = 'none';
-            label.textContent = 'SHOW ▼';
-            localStorage.setItem('hll_obs_hidden', '1');
-        }
-    }
-    (function() {
-        var body = document.getElementById('overlaysBody');
-        var label = document.getElementById('obsToggleLabel');
-        if (body && label && localStorage.getItem('hll_obs_hidden') === '1') {
-            body.style.display = 'none';
-            label.textContent = 'SHOW ▼';
-        }
-    })();
-
     loadConfig();
 
     // ── PHONE / DESKTOP MODE DETECTION ──
-    function toggleMsgSection() {
-        var body = document.getElementById('msgSectionBody');
-        var label = document.getElementById('msgToggleLabel');
-        if (!body || !label) return;
-        if (body.style.display === 'none') {
-            body.style.display = '';
-            label.textContent = 'HIDE ▲';
-            localStorage.removeItem('hll_msg_hidden');
-        } else {
-            body.style.display = 'none';
-            label.textContent = 'SHOW ▼';
-            localStorage.setItem('hll_msg_hidden', '1');
-        }
-    }
-    (function() {
-        var body = document.getElementById('msgSectionBody');
-        var label = document.getElementById('msgToggleLabel');
-        if (body && label && localStorage.getItem('hll_msg_hidden') === '1') {
-            body.style.display = 'none';
-            label.textContent = 'SHOW ▼';
-        }
-    })();
-
     function applyLayout() {
         const isPhone = window.innerWidth <= 600;
         document.body.classList.toggle('is-phone', isPhone);
@@ -1069,14 +960,14 @@
         updateFactionPills(name);
         updatePhoneFactionPills(name);
         const hint = document.getElementById('phoneFactionHint');
-        hint.textContent = 'saving...'; hint.style.color = '#718096';
+        hint.textContent = 'saving...'; hint.style.color = 'var(--text-mid)';
         fetch(`${SERVER}/config`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ allied_faction: name })
         }).then(() => {
-            hint.textContent = '✓ saved'; hint.style.color = '#00ff88';
-            setTimeout(() => { hint.textContent = 'tap to select'; hint.style.color = '#718096'; }, 2000);
+            hint.textContent = '✓ saved'; hint.style.color = 'var(--green)';
+            setTimeout(() => { hint.textContent = 'tap to select'; hint.style.color = ''; }, 2000);
         });
     }
 
@@ -1100,22 +991,23 @@
         document.getElementById('phone-pill-standard').className = 'phone-pill' + (!val ? ' selected-allies' : '');
         document.getElementById('phone-pill-swapped').className  = 'phone-pill' + ( val ? ' selected-axis'  : '');
         const hint = document.getElementById('phoneSwapHint');
-        hint.textContent = 'saving...'; hint.style.color = '#718096';
+        hint.textContent = 'saving...'; hint.style.color = 'var(--text-mid)';
         saveConfig('swapHint').then(() => {
-            hint.textContent = '✓ saved'; hint.style.color = '#00ff88';
-            setTimeout(() => { hint.textContent = 'tap to change'; hint.style.color = '#718096'; }, 2000);
+            hint.textContent = '✓ saved'; hint.style.color = 'var(--green)';
+            setTimeout(() => { hint.textContent = 'tap to change'; hint.style.color = ''; }, 2000);
         });
     }
 
     function onPhonePlayerInput() {
+        // Keep desktop input in sync
         document.getElementById('player').value = document.getElementById('phone-player').value;
         clearTimeout(phoneTimer);
         phoneTimer = setTimeout(async () => {
-            var hint = document.getElementById('phoneSpotlightHint');
-            hint.textContent = 'saving...'; hint.style.color = '#718096';
+            const hint = document.getElementById('phoneSpotlightHint');
+            hint.textContent = 'saving...'; hint.style.color = 'var(--text-mid)';
             await savePlayer('spotlightHint');
-            hint.textContent = '✓ saved'; hint.style.color = '#00ff88';
-            setTimeout(function() { hint.textContent = 'type to search'; hint.style.color = '#718096'; }, 2000);
+            hint.textContent = '✓ saved'; hint.style.color = 'var(--green)';
+            setTimeout(() => { hint.textContent = 'type to search'; hint.style.color = ''; }, 2000);
         }, 150);
     }
 
@@ -1123,10 +1015,10 @@
         document.getElementById('phone-player').value = '';
         document.getElementById('player').value = '';
         const hint = document.getElementById('phoneSpotlightHint');
-        hint.textContent = 'clearing...'; hint.style.color = '#718096';
+        hint.textContent = 'clearing...'; hint.style.color = 'var(--text-mid)';
         await savePlayer('spotlightHint');
-        hint.textContent = '✓ cleared'; hint.style.color = '#00ff88';
-        setTimeout(() => { hint.textContent = 'type to search'; hint.style.color = '#718096'; }, 2000);
+        hint.textContent = '✓ cleared'; hint.style.color = 'var(--green)';
+        setTimeout(() => { hint.textContent = 'type to search'; hint.style.color = ''; }, 2000);
     }
 
     // Keep phone UI in sync with server state
@@ -1152,16 +1044,14 @@
             }
 
             // ── Sync desktop player input (skip if user is actively typing) ──
-            const desktopInput = document.getElementById('player');
+            var desktopInput = document.getElementById('player');
             if (document.activeElement !== desktopInput) {
                 desktopInput.value = data.player || '';
-                updateSpotlightStatus(data.player || '');
             }
-            // ── Update live player list via server proxy (no CORS issues) ──
             if (data.api_endpoint) {
                 try {
-                    const pr = await fetch(`${SERVER}/players?t=` + Date.now(), { cache: 'no-store' });
-                    const pd = await pr.json();
+                    var pr = await fetch(SERVER + '/players?t=' + Date.now(), { cache: 'no-store' });
+                    var pd = await pr.json();
                     if (pd && pd.players) livePlayerList = pd.players;
                 } catch(e) {}
             }
@@ -1322,7 +1212,7 @@
         if (!text) {
             const hint = document.getElementById('msgHint');
             hint.textContent = 'Type a message first'; hint.style.color = '#ff3c3c';
-            setTimeout(() => { hint.textContent = 'Injected into Top 5 & Top 10 scroll banners'; hint.style.color = '#718096'; }, 2000);
+            setTimeout(() => { hint.textContent = 'Injected into Top 5 & Top 10 scroll banners'; hint.style.color = ''; }, 2000);
             return;
         }
         const msgs = getTickerMessages();
@@ -1340,8 +1230,8 @@
         renderMsgList();
         renderPreview();
         const hint = document.getElementById('msgHint');
-        hint.textContent = '✓ Message added to ticker'; hint.style.color = '#00ff88';
-        setTimeout(() => { hint.textContent = 'Injected into Top 5 & Top 10 scroll banners'; hint.style.color = '#718096'; }, 2000);
+        hint.textContent = '✓ Message added to ticker'; hint.style.color = 'var(--green)';
+        setTimeout(() => { hint.textContent = 'Injected into Top 5 & Top 10 scroll banners'; hint.style.color = ''; }, 2000);
     }
 
     function toggleMessage(id) {
