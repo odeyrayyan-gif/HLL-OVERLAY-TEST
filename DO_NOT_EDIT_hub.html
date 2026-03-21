@@ -569,6 +569,7 @@
             placeholder="Part of player name..."
             oninput="onPhonePlayerInput()"
             autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        <div id="phoneSuggestions" style="display:none;background:#0d1117;border:1px solid #2e3a48;border-radius:6px;margin-top:4px;overflow:hidden;"></div>
         <button class="phone-clear" onclick="clearPhonePlayer()">✕ Clear — Show Top Killer</button>
     </div>
 
@@ -995,16 +996,46 @@
     }
 
     function onPhonePlayerInput() {
-        // Keep desktop input in sync
-        document.getElementById('player').value = document.getElementById('phone-player').value;
+        const query = document.getElementById('phone-player').value;
+        document.getElementById('player').value = query;
+        // Show suggestions in phone dropdown
+        const box = document.getElementById('phoneSuggestions');
+        if (box && query.trim() && livePlayerList.length > 0) {
+            const scored = livePlayerList
+                .map(p => ({ p, score: scoreMatch(p.player, query) }))
+                .filter(x => x.score >= 0)
+                .sort((a, b) => b.score - a.score || b.p.kills - a.p.kills)
+                .slice(0, 5);
+            if (scored.length) {
+                box.innerHTML = scored.map((x, i) => {
+                    const isBest = i === 0 && x.score >= 80;
+                    const name = x.p.player.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+                    return '<div onclick="selectPhoneSuggestion(this)" data-name="' + name + '" style="padding:14px;font-size:14px;cursor:pointer;border-bottom:1px solid #1e2530;color:white;' + (isBest ? 'border-left:3px solid #ff9d00;' : '') + '">' + x.p.player + ' <span style="font-size:10px;color:#4a5568;">K:' + x.p.kills + '</span></div>';
+                }).join('');
+                box.style.display = 'block';
+            } else {
+                box.style.display = 'none';
+            }
+        } else if (box) {
+            box.style.display = 'none';
+        }
         clearTimeout(phoneTimer);
         phoneTimer = setTimeout(async () => {
             const hint = document.getElementById('phoneSpotlightHint');
-            hint.textContent = 'saving...'; hint.style.color = 'var(--text-mid)';
+            hint.textContent = 'saving...';
             await savePlayer('spotlightHint');
-            hint.textContent = '✓ saved'; hint.style.color = 'var(--green)';
-            setTimeout(() => { hint.textContent = 'type to search'; hint.style.color = ''; }, 2000);
-        }, 150);
+            hint.textContent = '✓ saved';
+            setTimeout(() => { hint.textContent = 'type to search'; }, 2000);
+        }, 400);
+    }
+
+    function selectPhoneSuggestion(el) {
+        const name = el.getAttribute('data-name');
+        document.getElementById('phone-player').value = name;
+        document.getElementById('player').value = name;
+        const box = document.getElementById('phoneSuggestions');
+        if (box) box.style.display = 'none';
+        savePlayer('spotlightHint');
     }
 
     async function clearPhonePlayer() {
