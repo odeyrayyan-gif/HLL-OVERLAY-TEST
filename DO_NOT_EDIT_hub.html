@@ -995,9 +995,17 @@
         });
     }
 
-    function onPhonePlayerInput() {
+    async function onPhonePlayerInput() {
         const query = document.getElementById('phone-player').value;
         document.getElementById('player').value = query;
+        // Fetch players on demand if list is empty
+        if (livePlayerList.length === 0) {
+            try {
+                const pr = await fetch(`${SERVER}/players?t=${Date.now()}`, { cache: 'no-store' });
+                const pd = await pr.json();
+                if (pd && pd.players) livePlayerList = pd.players;
+            } catch(e) {}
+        }
         // Show suggestions in phone dropdown
         const box = document.getElementById('phoneSuggestions');
         if (box && query.trim() && livePlayerList.length > 0) {
@@ -1010,7 +1018,7 @@
                 box.innerHTML = scored.map((x, i) => {
                     const isBest = i === 0 && x.score >= 80;
                     const name = x.p.player.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
-                    return '<div onclick="selectPhoneSuggestion(this)" data-name="' + name + '" style="padding:14px;font-size:14px;cursor:pointer;border-bottom:1px solid #1e2530;color:white;' + (isBest ? 'border-left:3px solid #ff9d00;' : '') + '">' + x.p.player + ' <span style="font-size:10px;color:#4a5568;">K:' + x.p.kills + '</span></div>';
+                    return '<div onclick="selectPhoneSuggestion(this)" ontouchend="selectPhoneSuggestion(this)" data-name="' + name + '" style="padding:14px;font-size:14px;cursor:pointer;border-bottom:1px solid #1e2530;color:white;-webkit-tap-highlight-color:rgba(172,46,46,0.3);' + (isBest ? 'border-left:3px solid #ff9d00;' : '') + '">' + x.p.player + ' <span style="font-size:10px;color:#4a5568;">K:' + x.p.kills + '</span></div>';
                 }).join('');
                 box.style.display = 'block';
             } else {
@@ -1030,6 +1038,7 @@
     }
 
     function selectPhoneSuggestion(el) {
+        if (event) event.preventDefault();
         const name = el.getAttribute('data-name');
         document.getElementById('phone-player').value = name;
         document.getElementById('player').value = name;
