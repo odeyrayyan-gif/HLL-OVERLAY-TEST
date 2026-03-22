@@ -209,29 +209,55 @@
 
     // ── Tank weapon signatures ──
     const TANK_WEAPONS = [
-        // German
-        { key: "88mm kwk",        name: "Tiger"       },
-        { key: "75mm kwk 42",     name: "Panther"     },
-        { key: "75mm kwk 40",     name: "Panzer IV"   },
-        { key: "75mm kwk37",      name: "Panzer IV"   },
-        { key: "50mm kwk 39",     name: "Puma"        },
-        { key: "20mm kwk",        name: "Lux"         },
-        { key: "75mm pak",        name: "Marder"      },
-        { key: "pak 40",          name: "PAK40"       },
-        { key: "pak40",           name: "PAK40"       },
-        // US
-        { key: "76mm m1",         name: "Sherman 76"  },
-        { key: "75mm m3",         name: "Sherman 75"  },
-        { key: "75mm cannon",     name: "Sherman 75"  },
-        { key: "37mm",            name: "Stuart"      },
-        // British
-        { key: "17 pounder",      name: "Firefly"     },
-        { key: "17pdr",           name: "Firefly"     },
-        // Soviet
-        { key: "122mm",           name: "IS-2"        },
-        { key: "76mm zis",        name: "T-34/76"     },
-        { key: "76mm f-34",       name: "T-34/76"     },
-    ];
+        // ── GERMAN ──
+        { key: "sd.kfz.181",        name: "Tiger I"       },  // Panzer VI Ausf. H1
+        { key: "sd.kfz.171",        name: "Panther"       },  // Panzer V Ausf. G
+        { key: "sd.kfz.161",        name: "Panzer IV"     },  // Panzer IV Ausf. G
+        { key: "sd.kfz.234",        name: "Puma"          },  // Recon
+        { key: "sd.kfz.121",        name: "Luchs"         },  // Panzer II Ausf. L
+        { key: "88mm kwk",          name: "Tiger I"       },
+        { key: "75mm kwk 42",       name: "Panther"       },
+        { key: "75mm kwk 40",       name: "Panzer IV"     },
+        { key: "75mm kwk37",        name: "Panzer IV"     },
+        { key: "50mm kwk 39",       name: "Puma"          },
+        { key: "20mm kwk",          name: "Luchs"         },
+        { key: "75mm pak",          name: "Marder"        },
+        { key: "pak 40",            name: "Marder"        },
+        // ── US ──
+        { key: "m4a3e2(76)",        name: "Jumbo 76"      },  // Heavy
+        { key: "m4a3e2",            name: "Jumbo 75"      },  // Heavy
+        { key: "m4a3",              name: "Sherman"       },  // Medium
+        { key: "m5a1",              name: "Stuart"        },  // Light
+        { key: "m8 greyhound",      name: "Greyhound"     },  // Recon
+        { key: "76mm m1",           name: "Jumbo 76"      },
+        { key: "75mm m3",           name: "Sherman"       },
+        { key: "75mm cannon",       name: "Sherman"       },
+        { key: "37mm",              name: "Stuart"        },
+        // ── SOVIET ──
+        { key: "is-1",              name: "IS-1"          },  // Heavy
+        { key: "t-34",              name: "T-34/76"       },  // Medium
+        { key: "t34",               name: "T-34/76"       },
+        { key: "t-70",              name: "T-70"          },  // Light
+        { key: "ba-10",             name: "BA-10"         },  // Recon
+        { key: "122mm",             name: "IS-1"          },
+        { key: "76mm zis",          name: "T-34/76"       },
+        { key: "76mm f-34",         name: "T-34/76"       },
+        { key: "45mm",              name: "T-70"          },
+        // ── BRITISH ──
+        { key: "churchill mk vii",  name: "Churchill VII" },  // Heavy
+        { key: "churchill mk iii",  name: "Churchill III" },  // Heavy
+        { key: "firefly",           name: "Firefly"       },  // Heavy
+        { key: "cromwell",          name: "Cromwell"      },  // Medium
+        { key: "crusader",          name: "Crusader"      },  // Medium
+        { key: "m3 stuart",         name: "Honey"         },  // Light
+        { key: "tetrarch",          name: "Tetrarch"      },  // Light
+        { key: "daimler",           name: "Daimler"       },  // Recon
+        { key: "17 pounder",        name: "Firefly"       },
+        { key: "17pdr",             name: "Firefly"       },
+        { key: "qf 75mm",           name: "Cromwell"      },
+        { key: "qf 6 pounder",      name: "Crusader"      },
+        { key: "qf 2 pounder",      name: "Tetrarch"      },
+    ];;
 
     const AXIS_SIGS = [
         "kar98","mp40","mg34","mg42","stg44","fg42","gewehr","zf41",
