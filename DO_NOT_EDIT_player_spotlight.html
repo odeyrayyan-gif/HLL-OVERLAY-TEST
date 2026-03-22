@@ -199,7 +199,7 @@ async function fetchNoCache(url){
 // Updated to read JSON for settings, but keep plain text for PLAYER_FILE
 async function getSettings() {
     try {
-        const r = await fetch(CONFIG_URL + "?t=" + Date.now(), { cache: "no-store" });
+        const r = await fetch(CONFIG_URL + "?t=" + Date.now(), { cache: "no-store", headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" } });
         if (!r.ok) return null;
         return await r.json();
     } catch(e) { return null; }
@@ -207,7 +207,7 @@ async function getSettings() {
 
 async function getManualPlayer() {
     try {
-        const r = await fetch(PLAYER_URL + "?t=" + Date.now(), { cache: "no-store" });
+        const r = await fetch(PLAYER_URL + "?t=" + Date.now(), { cache: "no-store", headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" } });
         if (!r.ok) return "";
         const d = await r.json();
         return d.player || "";
@@ -339,8 +339,8 @@ let lastPlayer = null;
 async function pollConfigAndPlayer() {
     try {
         const [cfgR, plrR] = await Promise.all([
-            fetch(CONFIG_URL + "?t=" + Date.now(), { cache: "no-store" }),
-            fetch(PLAYER_URL + "?t=" + Date.now(), { cache: "no-store" })
+            fetch(CONFIG_URL + "?t=" + Date.now(), { cache: "no-store", headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" } }),
+            fetch(PLAYER_URL + "?t=" + Date.now(), { cache: "no-store", headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" } })
         ]);
         if (cfgR.ok) cachedSettings = await cfgR.json();
         const pd = plrR.ok ? await plrR.json() : {};
