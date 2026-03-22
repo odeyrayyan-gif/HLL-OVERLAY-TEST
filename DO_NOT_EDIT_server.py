@@ -155,6 +155,9 @@ class HLLHandler(SimpleHTTPRequestHandler):
         err = sys.exc_info()[1]
         if isinstance(err, (ConnectionResetError, BrokenPipeError, ConnectionAbortedError)):
             return  # Normal — ignore cleanly
+        # Also ignore Windows-specific socket errors (WinError 10053, 10054)
+        if isinstance(err, OSError) and hasattr(err, 'winerror') and err.winerror in (10053, 10054):
+            return
         # For anything else, print it so real bugs are visible
         print(f"  [!] Unexpected error from {client_address}: {err}")
 
