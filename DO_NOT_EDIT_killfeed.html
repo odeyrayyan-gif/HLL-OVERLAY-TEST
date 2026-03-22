@@ -389,7 +389,7 @@
         }
         try {
             const sep = api.includes("?") ? "&" : "?";
-            const res = await fetch(api + sep + "t=" + Date.now(), { cache: "no-store", headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" } });
+            const res = await fetch(api + sep + "t=" + Date.now(), { cache: "no-store" });
             if (!res.ok) throw new Error(res.status);
             const data    = await res.json();
             const players = data?.result?.stats || [];
