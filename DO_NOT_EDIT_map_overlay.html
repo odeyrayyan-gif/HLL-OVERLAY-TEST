@@ -2,116 +2,66 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>HLL HQ Command Dashboard</title>
+    <title>HLL Team Comparison</title>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: rgba(12, 14, 18, 0.88); 
+            --bg: rgba(9, 12, 18, 0.95);
             --allies: #00a2ff;
             --axis: #ff3c00;
             --accent: #ac2e2e;
-            --border: 1px solid rgba(255,255,255,0.1);
-            --panel-width: 500px; 
-            --panel-height: 585px;
+            --border: 1px solid rgba(255, 255, 255, 0.12);
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            width: 1920px; height: 1080px;
-            background: transparent;
-            font-family: 'Oswald', sans-serif;
-            color: #eee;
-            overflow: hidden;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 40px;
+        html, body { 
+            margin: 0; padding: 0; width: 3840px; height: 2160px; 
+            background: transparent; color: white; font-family: 'Oswald', sans-serif;
+            overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
-        .panel {
-            width: var(--panel-width);
-            height: var(--panel-height);
-            background: var(--bg);
-            backdrop-filter: blur(15px);
-            border: var(--border);
-            display: flex;
-            flex-direction: column;
-            border-radius: 4px;
+        .compare-card {
+            width: 1600px; background: var(--bg); border: var(--border);
+            border-radius: 20px; padding: 60px; backdrop-filter: blur(20px);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+            border-left: 10px solid var(--accent); border-right: 10px solid var(--accent);
         }
-        .left-side { border-left: 5px solid var(--accent); }
-        .right-side { border-right: 5px solid var(--accent); }
+        .header { display: flex; justify-content: center; align-items: center; margin-bottom: 50px; gap: 80px; }
+        .team-name { font-size: 70px; text-transform: uppercase; letter-spacing: 10px; font-weight: 700; }
+        .kd-mid { font-size: 40px; color: var(--accent); letter-spacing: 5px; font-weight: 700; }
         
-        .header { padding: 12px; background: rgba(255,255,255,0.03); border-bottom: var(--border); text-align: center; }
+        .stat-row { display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center; margin-bottom: 20px; }
+        .stat-value { font-size: 80px; font-weight: 700; }
+        .stat-name { text-align: center; font-size: 28px; text-transform: uppercase; color: rgba(255,255,255,0.4); letter-spacing: 4px; }
         
-        /* Increased spacing for the KillDiff Header */
-        .header-title { 
-            font-size: 18px; 
-            text-transform: uppercase; 
-            font-weight: 700; 
-            display: flex; 
-            justify-content: center; 
-            gap: 40px; /* Further spacing between items */
-            align-items: center; 
-        }
+        .bar-container { grid-column: 1 / span 3; height: 16px; background: rgba(0,0,0,0.3); border-radius: 2px; display: flex; overflow: hidden; margin-bottom: 35px; }
+        .bar { height: 100%; transition: width 0.8s ease-in-out; }
         
-        .team-label { letter-spacing: 4px; } /* Wider spacing for Faction names */
-        .kd-label { letter-spacing: 2px; }
-
-        .content { padding: 8px 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: flex-start; }
-
-        .k-row {
-            display: grid;
-            grid-template-columns: 30px 1fr 65px 65px 65px;
-            align-items: center;
-            padding: 7px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            gap: 10px;
-        }
-        .k-row:last-child { border-bottom: none; }
-        .k-rank { color: rgba(255,255,255,0.2); font-size: 13px; font-weight: 700; }
-        .k-name { font-size: 16px; text-transform: uppercase; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .bar-left-blue { background: var(--allies); box-shadow: 0 0 20px rgba(0, 162, 255, 0.4); }
+        .bar-right-red { background: var(--axis); box-shadow: 0 0 20px rgba(255, 60, 0, 0.4); }
         
-        .color-left { color: var(--allies); text-shadow: 0 0 8px rgba(0, 162, 255, 0.3); }
-        .color-right { color: var(--axis); text-shadow: 0 0 8px rgba(255, 60, 0, 0.3); }
-
-        .stat-box { text-align: center; }
-        .stat-val { font-size: 18px; font-weight: 700; color: #fff; line-height: 1; }
-        .stat-label { font-size: 8px; color: var(--accent); text-transform: uppercase; margin-top: 2px; font-weight: 700; }
-
-        .s-row { margin-bottom: 15px; }
-        .s-info { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3px; }
-        .s-label { font-size: 12px; text-transform: uppercase; color: rgba(255,255,255,0.5); letter-spacing: 1.5px; }
-        .s-val { font-weight: 700; font-size: 18px; }
-
-        .bar-container { height: 10px; background: rgba(0,0,0,0.3); border-radius: 1px; overflow: hidden; display: flex; }
-        .bar { height: 100%; transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); }
-        .bar-left-blue { background: var(--allies); }
-        .bar-right-red { background: var(--axis); }
-
-        .footer { font-size: 10px; text-align: center; padding: 8px; color: #ff9d00; text-transform: uppercase; font-weight: 700; border-top: 1px solid rgba(255,255,255,0.03); }
+        .left-text { color: var(--allies); text-align: left; }
+        .right-text { color: var(--axis); text-align: right; }
+        
+        #status-bar { margin-top: 30px; font-size: 24px; color: #ff9d00; text-transform: uppercase; letter-spacing: 2px; }
     </style>
 </head>
 <body>
-    <div class="panel left-side">
-        <div class="header"><div class="header-title" style="color:var(--accent); letter-spacing: 4px;">TOP 10 INFANTRY</div></div>
-        <div id="killers-list" class="content"></div>
-        <div class="footer">COMMAND FEED</div>
+<div class="compare-card">
+    <div class="header">
+        <div id="left-label" class="team-name left-text">ALLIES</div>
+        <div class="kd-mid">KILLDIFF</div>
+        <div id="right-label" class="team-name right-text">AXIS</div>
     </div>
-    <div class="panel right-side">
-        <div class="header">
-            <div id="dynamic-header" class="header-title">
-                </div>
-        </div>
-        <div id="teams-list" class="content"></div>
-        <div class="footer" id="status-text">SIGNAL SECURE</div>
-    </div>
+    <div id="stats-content"></div>
+</div>
+<div id="status-bar">SYNCING COMBAT DATA...</div>
 
 <script>
     const CONFIG_URL = "http://localhost:3001/config";
-    const AXIS_SIGS = ["kar98", "mp40", "mg34", "mg42", "stg44", "fg42", "gewehr", "zf41", "p38", "luger", "walther", "stielhandgranate", "tiger", "panzer", "puma", "lux", "marder", "lefh", "sfh", "150mm", "pak40", "panzerfaust", "brumm", "stuh", "strumpanzer"];
-
+    const AXIS_SIGS = ["kar98", "mp40", "mg34", "mg42", "stg44", "fg42", "gewehr", "zf41", "p38", "luger", "walther", "stielhandgranate", "tiger", "panzer", "panther", "puma", "lux", "luchs", "marder", "sd.kfz", "lefh", "sfh", "150mm", "pak40", "panzerfaust", "brumm", "stuh", "strumpanzer"];
+    
     const CAT_MAP = {
         infantry: ["garand", "thompson", "carbine", "springfield", "m1911", "grease", "sten", "enfield", "mosin", "ppsh", "svt40", "tokarev", "nagant", "kar98", "mp40", "stg44", "gewehr", "p38", "luger", "walther", "stielhandgranate"],
         mg: ["mg34", "mg42", "m1919", "browning", "lewis", "dp27"],
-        armor: ["tiger", "panzer", "puma", "lux", "marder", "stuart", "sherman", "is2", "t34", "75mm", "76mm", "88mm"],
+        armor: ["tiger", "panzer", "panther", "puma", "lux", "luchs", "marder", "sd.kfz", "stuart", "sherman", "is2", "t34", "75mm", "76mm", "88mm"],
         rocket: ["bazooka", "panzerschreck", "piat", "panzerfaust"],
         artillery: ["artillery", "155mm", "150mm", "105mm", "lefh", "howitzer", "spa 105", "sfh"],
         satchel: ["satchel", "explosive charge"],
@@ -142,10 +92,14 @@
             if (cat === 'armor') {
                 if ((p.v_kills || 0) > 0 && p.weapons) {
                     const wKeys = Object.keys(p.weapons).join(' ').toLowerCase();
-                    const TANK_SIGS = ['tiger','panzer','panther','puma','lux','marder',
-                        'sherman','stuart','firefly','is2','t-34','t34','sd.kfz',
-                        '75mm kwk','76mm m1','88mm kwk','122mm d-25','50mm kwk',
-                        '20mm kwk','17 pounder','76mm zis','76mm f-34'];
+                    const TANK_SIGS = ['tiger','panzer','panther','puma','luchs','marder',
+                        'sherman','stuart','greyhound','jumbo',
+                        'firefly','cromwell','crusader','churchill','tetrarch','daimler','honey',
+                        'is-1','is-2','t-34','t34','t-70','ba-10',
+                        'sd.kfz','m4a3','m5a1','m8',
+                        '75mm kwk','76mm m1','88mm kwk','122mm','50mm kwk',
+                        '20mm kwk','17 pounder','76mm zis','76mm f-34',
+                        '37mm','45mm','qf 75mm','qf 6 pounder','qf 2 pounder'];
                     const AT_SIGS = ['bazooka','panzerschreck','piat','panzerfaust',
                         'zis-3','pak40','anti_tank','m5 at'];
                     const isAtInfantry = AT_SIGS.some(k => wKeys.includes(k));
@@ -186,6 +140,7 @@
         return count;
     }
 
+    // Fast config poll — runs every 1s so hub changes apply instantly
     let cachedConfig = { api_endpoint: "", swap_sides: false, allied_faction: "ALLIES" };
     let lastSwap = null;
     async function pollConfig() {
@@ -195,123 +150,79 @@
             const cfg = await r.json();
             if (cfg && cfg.api_endpoint !== undefined) {
                 cachedConfig = cfg;
-                if (lastSwap !== null && lastSwap !== cfg.swap_sides) {
-                    update();
-                }
+                if (lastSwap !== null && lastSwap !== cfg.swap_sides) { update(); }
                 lastSwap = cfg.swap_sides;
             }
-        } catch(e) {
-            console.warn("[HLL] pollConfig failed:", e.message);
-        }
+        } catch(e) { console.warn("[HLL] pollConfig failed:", e.message); }
     }
 
-
-    // Exclude armor crews and artillery gunners from infantry lists
-    const EXCLUDED_WEAPONS_LIST = [
-        'artillery','lefh','155mm','150mm','105mm','howitzer','pak40','anti_tank',
-        'zis3','88mm','75mm','76mm','tank','mine'
-    ];
-    function isArtyOrArmor(p) {
-        if ((p.v_kills || 0) > (Number(p.kills || 0) * 0.4)) return true;
-        if (!p.weapons) return false;
-        const top = Object.entries(p.weapons).sort((a,b) => b[1]-a[1])[0];
-        if (!top) return false;
-        return EXCLUDED_WEAPONS_LIST.some(ex => top[0].toLowerCase().includes(ex));
-    }
     async function update() {
         try {
             const settings = cachedConfig;
-            if (!settings.api_endpoint) { document.getElementById("status-text").innerText = "AWAITING API — CHECK HUB"; return; }
+            if (!settings.api_endpoint) { document.getElementById("status-bar").innerText = "AWAITING API — CHECK HUB"; return; }
             const data = await fetchNoCache(settings.api_endpoint);
             const players = data?.result?.stats || [];
             const swapped = settings.swap_sides;
             const alliedName = settings.allied_faction || "ALLIES";
             const axisName   = "GERMANY";
 
-            // DYNAMIC HEADER UPDATE WITH SPACING
-            const leftTeamName  = swapped ? axisName   : alliedName;
-            const rightTeamName = swapped ? alliedName : axisName;
-            document.getElementById("dynamic-header").innerHTML = `
-                <span class="team-label" style="color:var(--allies)">${leftTeamName}</span>
-                <span class="kd-label" style="color:var(--accent)">KILLDIFF</span>
-                <span class="team-label" style="color:var(--axis)">${rightTeamName}</span>
-            `;
-
-            // TOP 10 LIST - COLORING BASED ON SWAP TOGGLE
-            const top10 = players
-                .filter(p => !isArtyOrArmor(p))
-                .sort((a, b) => b.kills - a.kills).slice(0, 10);
-
-            let kHtml = "";
-            top10.forEach((p, i) => {
-                const team = identifyTeam(p);
-                let colorClass = "";
-                if (!swapped) {
-                    colorClass = (team === "Allies") ? "color-left" : "color-right";
-                } else {
-                    colorClass = (team === "Axis") ? "color-left" : "color-right";
-                }
-
-                kHtml += `
-                    <div class="k-row">
-                        <div class="k-rank">${i+1}</div>
-                        <div class="k-name ${colorClass}">${p.player}</div>
-                        <div class="stat-box"><div class="stat-val">${p.combat}</div><div class="stat-label">CBT</div></div>
-                        <div class="stat-box"><div class="stat-val">${p.kills}</div><div class="stat-label">K</div></div>
-                        <div class="stat-box"><div class="stat-val">${p.deaths}</div><div class="stat-label">D</div></div>
-                    </div>`;
-            });
-            document.getElementById("killers-list").innerHTML = kHtml;
-
-            // KILLDIFF BARS
             const teams = { "Allies": [], "Axis": [] };
             players.forEach(p => teams[identifyTeam(p)].push(p));
 
-            let tHtml = "";
-            const categories = ["infantry", "sniper", "mg", "armor", "rocket", "artillery", "satchel"];
-            let totalA = 0, totalX = 0;
+            // Default: Allies Left, Axis Right
+            // Swapped: Axis Left, Allies Right
+            const leftTeamName  = swapped ? axisName   : alliedName;
+            const rightTeamName = swapped ? alliedName : axisName;
+            
+            document.getElementById("left-label").innerText = leftTeamName;
+            document.getElementById("right-label").innerText = rightTeamName;
 
-            categories.forEach(cat => {
-                const aVal = getKills(teams["Allies"], cat);
-                const xVal = getKills(teams["Axis"], cat);
-                totalA += aVal; totalX += xVal;
-                
-                const total = (aVal + xVal) || 1;
-                const aPct = (aVal / total) * 100;
+            const rows = [
+                { id: "infantry",  label: "Infantry"    },
+                { id: "sniper",    label: "Sniper"      },
+                { id: "mg",        label: "Machine Gun" },
+                { id: "armor",     label: "Armor"       },
+                { id: "rocket",    label: "Anti-Tank"   },
+                { id: "artillery", label: "Artillery"   },
+                { id: "satchel",   label: "Satchel"     }
+            ];
 
-                const leftScore = swapped ? xVal : aVal;
-                const rightScore = swapped ? aVal : xVal;
+            let html = "";
+            let totalL = 0, totalR = 0;
 
-                tHtml += `
-                    <div class="s-row">
-                        <div class="s-info">
-                            <span class="s-val" style="color: var(--allies)">${leftScore}</span>
-                            <span class="s-label">${cat}</span>
-                            <span class="s-val" style="color: var(--axis)">${rightScore}</span>
-                        </div>
+            rows.forEach(row => {
+                const aVal = getKills(teams["Allies"], row.id);
+                const xVal = getKills(teams["Axis"], row.id);
+                const valL = swapped ? xVal : aVal;
+                const valR = swapped ? aVal : xVal;
+                totalL += valL;
+                totalR += valR;
+                const leftBarPct = (valL / (valL + valR || 1)) * 100;
+
+                html += `
+                    <div class="stat-row">
+                        <div class="stat-value left-text">${valL}</div>
+                        <div class="stat-name">${row.label}</div>
+                        <div class="stat-value right-text">${valR}</div>
                         <div class="bar-container">
-                            <div class="bar bar-left-blue" style="width:${swapped ? (100-aPct) : aPct}%"></div>
-                            <div class="bar bar-right-red" style="width:${swapped ? aPct : (100-aPct)}%"></div>
+                            <div class="bar bar-left-blue" style="width: ${leftBarPct}%"></div>
+                            <div class="bar bar-right-red" style="width: ${100 - leftBarPct}%"></div>
                         </div>
                     </div>`;
             });
 
-            // Total Kills Row
-            const tLeftScore = swapped ? totalX : totalA;
-            const tRightScore = swapped ? totalA : totalX;
-            tHtml += `
-                <div class="s-row" style="margin-top:20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top:10px;">
-                    <div class="s-info">
-                        <span class="s-val" style="color: var(--allies)">${tLeftScore}</span>
-                        <span class="s-label" style="color:var(--accent); font-weight:700;">TOTAL KILLS</span>
-                        <span class="s-val" style="color: var(--axis)">${tRightScore}</span>
-                    </div>
+            // Total kills row at bottom
+            html += `
+                <div class="stat-row" style="margin-top:20px; border-top: 2px solid rgba(255,255,255,0.08); padding-top:15px;">
+                    <div class="stat-value left-text" style="font-size:90px">${totalL}</div>
+                    <div class="stat-name" style="color:var(--accent); font-weight:700; font-size:22px;">TOTAL KILLS</div>
+                    <div class="stat-value right-text" style="font-size:90px">${totalR}</div>
                 </div>`;
 
-            document.getElementById("teams-list").innerHTML = tHtml;
-            document.getElementById("status-text").innerText = `SIGNAL SECURE | SYNCED: ${players.length}`;
+            document.getElementById("stats-content").innerHTML = html;
+            document.getElementById("status-bar").innerText = `SIGNAL SECURE | SYNCED: ${players.length} PLAYERS`;
 
-        } catch (e) { document.getElementById("status-text").innerText = "SIGNAL LOST"; }
+        } catch (e) { document.getElementById("status-bar").innerText = "SIGNAL LOST"; }
     }
     pollConfig().then(() => update());
     setInterval(pollConfig, 1000);
