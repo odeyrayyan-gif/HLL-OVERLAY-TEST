@@ -56,12 +56,12 @@
 
 <script>
     const CONFIG_URL = "http://localhost:3001/config";
-    const AXIS_SIGS = ["kar98", "mp40", "mg34", "mg42", "stg44", "fg42", "gewehr", "zf41", "p38", "luger", "walther", "stielhandgranate", "tiger", "panzer", "puma", "lux", "marder", "lefh", "sfh", "150mm", "pak40", "panzerfaust", "brumm", "stuh", "strumpanzer"];
+    const AXIS_SIGS = ["kar98", "mp40", "mg34", "mg42", "stg44", "fg42", "gewehr", "zf41", "p38", "luger", "walther", "stielhandgranate", "tiger", "panzer", "panther", "puma", "lux", "luchs", "marder", "sd.kfz", "lefh", "sfh", "150mm", "pak40", "panzerfaust", "brumm", "stuh", "strumpanzer"];
     
     const CAT_MAP = {
         infantry: ["garand", "thompson", "carbine", "springfield", "m1911", "grease", "sten", "enfield", "mosin", "ppsh", "svt40", "tokarev", "nagant", "kar98", "mp40", "stg44", "gewehr", "p38", "luger", "walther", "stielhandgranate"],
         mg: ["mg34", "mg42", "m1919", "browning", "lewis", "dp27"],
-        armor: ["tiger", "panzer", "puma", "lux", "marder", "stuart", "sherman", "is2", "t34", "75mm", "76mm", "88mm"],
+        armor: ["tiger", "panzer", "panther", "puma", "lux", "luchs", "marder", "sd.kfz", "stuart", "sherman", "is2", "t34", "75mm", "76mm", "88mm"],
         rocket: ["bazooka", "panzerschreck", "piat", "panzerfaust"],
         artillery: ["artillery", "155mm", "150mm", "105mm", "lefh", "howitzer", "spa 105", "sfh"],
         satchel: ["satchel", "explosive charge"],
@@ -92,10 +92,14 @@
             if (cat === 'armor') {
                 if ((p.v_kills || 0) > 0 && p.weapons) {
                     const wKeys = Object.keys(p.weapons).join(' ').toLowerCase();
-                    const TANK_SIGS = ['tiger','panzer','panther','puma','lux','marder',
-                        'sherman','stuart','firefly','is2','t-34','t34','sd.kfz',
-                        '75mm kwk','76mm m1','88mm kwk','122mm d-25','50mm kwk',
-                        '20mm kwk','17 pounder','76mm zis','76mm f-34'];
+                    const TANK_SIGS = ['tiger','panzer','panther','puma','luchs','marder',
+                        'sherman','stuart','greyhound','jumbo',
+                        'firefly','cromwell','crusader','churchill','tetrarch','daimler','honey',
+                        'is-1','is-2','t-34','t34','t-70','ba-10',
+                        'sd.kfz','m4a3','m5a1','m8',
+                        '75mm kwk','76mm m1','88mm kwk','122mm','50mm kwk',
+                        '20mm kwk','17 pounder','76mm zis','76mm f-34',
+                        '37mm','45mm','qf 75mm','qf 6 pounder','qf 2 pounder'];
                     const AT_SIGS = ['bazooka','panzerschreck','piat','panzerfaust',
                         'zis-3','pak40','anti_tank','m5 at'];
                     const isAtInfantry = AT_SIGS.some(k => wKeys.includes(k));
