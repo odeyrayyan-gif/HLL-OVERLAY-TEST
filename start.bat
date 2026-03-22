@@ -44,13 +44,7 @@ echo   Keep this window open while streaming.
 echo  ============================================================
 echo.
 
-:: Start the server in background then open browser
-start /b python DO_NOT_EDIT_server.py
-
-:: Wait for server to start then open browser
-timeout /t 2 /nobreak >nul
-start "" "http://localhost:3000"
-
-:: Now keep showing server output
+:: Start server then open browser after short delay
+start /b cmd /c "timeout /t 2 /nobreak >nul && start "" http://localhost:3000"
 python DO_NOT_EDIT_server.py
 pause
