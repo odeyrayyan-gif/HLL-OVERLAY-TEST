@@ -62,9 +62,6 @@ def download_file(filename):
         print(f"  [!] Failed to download {filename}: {e}")
         return False
 
-def check_for_updates():
-    print("  TEST BUILD — skipping update check")
-    return False
 # ─────────────────────────────────────────────────────────────────────────────
 
 CONFIG_FILE  = "DO_NOT_EDIT_settings.json"
@@ -286,14 +283,14 @@ if __name__ == "__main__":
         raise SystemExit(1)
 
     print("=" * 55)
-    print("  HLL OVERLAY SERVER — TEST BUILD")
+    print("  HLL OVERLAY SERVER — RUNNING")
     print("=" * 55)
     print(f"  Hub (this PC):  http://localhost:{PORT}")
     print(f"  Hub (phone):    http://{ip}:{PORT}")
     print(f"  OBS sources:    http://localhost:{PORT}/DO_NOT_EDIT_team_compare.html  etc.")
     print("=" * 55)
-    print("  *** TEST BUILD — NOT FOR STREAMING ***")
-    print("  Keep this window open while testing.")
+    print("  All overlays synced via local server.")
+    print("  Keep this window open while streaming.")
     print("  Press Ctrl+C to stop.\n")
 
     server.serve_forever()
